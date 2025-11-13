@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  phone     String?  @unique
+  password  String
+  role      String   @default("user") // 'user', 'vendor', 'admin', 'superadmin'
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  vendors   Vendor[]
+}
+
+model Vendor {
+  id                    String    @id @default(uuid())
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id])
+  businessName          String
+  gstNumber             String?
+  pincode               String?
+  city                  String?
+  state                 String?
+  email                 String?   @unique
+  openTime              String?
+  closingTime           String?
+  workingDays           String[]
+  plotnumber            String?
+  buildingname          String?
+  streetname            String?
+  landmark              String?
+  area                  String?
+  contactPersonTitle    String?
+  contactPersonName     String?
+  primaryMobileNumber   String?
+  primaryWhatsappNumber String?
+  address               String?
+  yearOfEstablishment   String?
+  yearlyTurnover        String?
+  numberOfEmployees     String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  kyc                   VendorKyc?
+  contacts              VendorContact[]
+  holidayTimings        HolidayTiming[]
+
+  @@index([userId])
+}
+
+model VendorKyc {
+  id            String   @id @default(uuid())
+  vendor        Vendor   @relation(fields: [vendor_id], references: [id], onDelete: Cascade)
+  vendor_id     String   @unique
+  aadhar_number String?
+  aadhar_url    String?
+  video_kyc_url String?
+  status        String   @default("pending") // pending, approved, rejected
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model VendorContact {
+  id             String @id @default(uuid())
+  vendor         Vendor @relation(fields: [vendor_id], references: [id], onDelete: Cascade)
+  vendor_id      String
+  contact_type   String // 'mobile' or 'whatsapp'
+  contact_number String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([vendor_id])
+}
+
+model HolidayTiming {
+  id           String   @id @default(uuid())
+  vendor       Vendor   @relation(fields: [vendor_id], references: [id], onDelete: Cascade)
+  vendor_id    String
+  holiday_date DateTime @db.Date
+  description  String?
+  is_closed    Boolean  @default(false)
+  time_slots   Json     @default("[]") // [{ open: "09:00", close: "18:00" }]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([vendor_id, holiday_date])
+  @@index([vendor_id])
+}
+
+model PasswordResetToken {
+    id        String   @id @default(uuid())
+    email     String
+    token     String   @unique
+    expiresAt DateTime
+
+    @@index([email])
+}

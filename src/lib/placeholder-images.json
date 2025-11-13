@@ -1,0 +1,1022 @@
+{
+  "placeholderImages": [
+    {
+      "id": "logo",
+      "description": "Gnetdial Logo",
+      "imageUrl": "https://content.jdmagicbox.com/images_new/jd_logo_v2.svg"
+    },
+    {
+      "id": "food-gif",
+      "description": "Food GIF for icons",
+      "imageUrl": "/food.gif"
+    },
+    {
+      "id": "sparkle-gif",
+      "description": "Sparkle GIF for icons",
+      "imageUrl": "/sparkle.gif"
+    },
+    {
+      "id": "gd-hero-mandap",
+      "description": "Gnetdial Hero Mandap",
+      "imageUrl": "https://img.freepik.com/free-photo/beautiful-hindu-wedding-ceremony-stage-with-great-decoration-mandap_1303-25556.jpg",
+      "imageHint": "wedding decoration"
+    },
+    {
+      "id": "gd-hero-b2b",
+      "description": "B2B services banner",
+      "imageUrl": "https://images.unsplash.com/photo-1681505531034-8d67054e07f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxidXNpbmVzcyUyMGhhbmRzaGFrZXxlbnwwfHx8fDE3NjE2NjMzNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "business handshake"
+    },
+    {
+      "id": "gd-hero-repairs",
+      "description": "Repairs and services banner",
+      "imageUrl": "https://images.unsplash.com/photo-1613206485381-b028e578e791?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx0b29sc3xlbnwwfHx8fDE3NjE2NjIzOTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tools"
+    },
+    {
+      "id": "gd-hero-realestate",
+      "description": "Real estate banner",
+      "imageUrl": "https://images.unsplash.com/photo-1628745277862-bc0b2d68c50c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb2Rlcm4lMjBob3VzZXxlbnwwfHx8fDE3NjE2MDE2Mjd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "modern house"
+    },
+    {
+      "id": "gd-hero-doctors",
+      "description": "Doctors and healthcare banner",
+      "imageUrl": "https://images.unsplash.com/photo-1584982751601-97dcc096659c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzdGV0aG9zY29wZXxlbnwwfHx8fDE3NjE2NjMzNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "stethoscope"
+    },
+    {
+      "id": "gd-ad-1",
+      "description": "Gnetdial Advertisement 1",
+      "imageUrl": "https://images.unsplash.com/photo-1607944759677-e305f1b25af8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhZHZlcnRpc2VtZW50JTIwcG9ydHJhaXR8ZW58MHx8fHwxNzYxNjYzMzQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "advertisement portrait"
+    },
+    {
+      "id": "gd-ad-2",
+      "description": "Gnetdial Advertisement 2",
+      "imageUrl": "https://images.unsplash.com/photo-1667023072347-973fba93805b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxhZHZlcnRpc2VtZW50JTIwcG9ydHJhaXR8ZW58MHx8fHwxNzYxNjYzMzQwfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "advertisement portrait"
+    },
+    {
+      "id": "gd-ad-3",
+      "description": "Gnetdial Advertisement 3",
+      "imageUrl": "https://images.unsplash.com/photo-1542040923574-a8f11ac5f05e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxhZHZlcnRpc2VtZW50JTIwcG9ydHJhaXR8ZW58MHx8fHwxNzYxNjYzMzQwfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "advertisement portrait"
+    },
+    {
+      "id": "jd-trending-1",
+      "description": "Trending search: Interior Designers",
+      "imageUrl": "https://images.unsplash.com/photo-1564078516393-cf04bd966897?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxpbnRlcmlvciUyMGRlc2lnbnxlbnwwfHx8fDE3NTk3MjkyNTV8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "interior design"
+    },
+    {
+      "id": "jd-trending-2",
+      "description": "Trending search: Interior Designers Showrooms",
+      "imageUrl": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb2Rlcm4lMjBraXRjaGVufGVufDB8fHx8MTc1OTgwODQxM3ww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "modern kitchen"
+    },
+    {
+      "id": "jd-trending-3",
+      "description": "Trending search: Bike on rent",
+      "imageUrl": "https://images.unsplash.com/photo-1591343395082-e120087004b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxzcGElMjBtYXNzYWdlfGVufDB8fHx8MTc1OTcwODAwOXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "spa massage"
+    },
+    {
+      "id": "jd-trending-4",
+      "description": "Trending search: Croma",
+      "imageUrl": "https://images.unsplash.com/photo-1593024849313-0a69d44445ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjaW5lbWElMjBoYWxsc3xlbnwwfHx8fDE3NTk4MDgzNDB8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "cinema hall"
+    },
+    {
+      "id": "jd-trending-5",
+      "description": "Trending search: Residential Cleaning",
+      "imageUrl": "https://images.unsplash.com/photo-1563453392212-921c199066cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjbGVhbiUyMGhvdXNlfGVufDB8fHx8MTc1OTgwODQ5NXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "clean house"
+    },
+    {
+      "id": "jd-trending-6",
+      "description": "Trending search: Wall Paper Dealers",
+      "imageUrl": "https://images.unsplash.com/photo-1616110996839-a78b5a0349f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx3YWxscGFwZXIlMjByb2xsc3xlbnwwfHx8fDE3NTk4MDgzOTh8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "wallpaper rolls"
+    },
+    {
+      "id": "jd-trending-7",
+      "description": "Trending search: Fire Cracker Dealers",
+      "imageUrl": "https://images.unsplash.com/photo-1574712592198-333a4a58b45a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmaXJld29ya3N8ZW58MHx8fHwxNzU5ODA4NDM5fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "fireworks"
+    },
+    {
+      "id": "jd-trending-8",
+      "description": "Trending search: Fire Cracker Wholesalers",
+      "imageUrl": "https://images.unsplash.com/photo-1533285782902-6c1a89680a65?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxmaXJld29ya3MlMjBkaXNwbGF5fGVufDB8fHx8MTc1OTgwODQ1OHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "fireworks display"
+    },
+    {
+      "id": "jd-trending-9",
+      "description": "Trending search: Eye Clinics",
+      "imageUrl": "https://images.unsplash.com/photo-1600577916048-823a74ae5b63?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxleWUlMjBleGFtfGVufDB8fHx8MTc1OTgwODUxOHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "eye exam"
+    },
+    {
+      "id": "jd-trending-10",
+      "description": "Trending search: Tempos On Hire",
+      "imageUrl": "https://images.unsplash.com/photo-1566576721346-d4a3b4ea9548?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkZWxpdmVyeSUyMHRydWNrfGVufDB8fHx8MTc1OTgwODU0Nnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "delivery truck"
+    },
+    {
+      "id": "jd-movie-1",
+      "description": "Movie poster 1",
+      "imageUrl": "https://images.unsplash.com/photo-1511875762315-c773eb98eec0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "movie poster"
+    },
+    {
+      "id": "jd-movie-2",
+      "description": "Movie poster 2",
+      "imageUrl": "https://images.unsplash.com/photo-1511875762315-c773eb98eec0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "movie poster"
+    },
+    {
+      "id": "jd-movie-3",
+      "description": "Movie poster 3",
+      "imageUrl": "https://images.unsplash.com/photo-1702635429447-06e9ee0c617c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "movie poster"
+    },
+    {
+      "id": "jd-movie-4",
+      "description": "Movie poster 4",
+      "imageUrl": "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "movie poster"
+    },
+    {
+      "id": "jd-movie-5",
+      "description": "Movie poster 5",
+      "imageUrl": "https://images.unsplash.com/photo-1635805737707-575885ab0820?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "movie poster"
+    },
+    {
+      "id": "jd-movie-6",
+      "description": "Movie poster 6",
+      "imageUrl": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bW92aWUlMjBwb3N0ZXJ8ZW58MHx8fHwxNzYxNTcxOTQ0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "movie poster"
+    },
+    {
+      "id": "jd-movie-7",
+      "description": "Movie poster 7",
+      "imageUrl": "https://images.unsplash.com/photo-1616530940355-351fabd9524b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "movie poster"
+    },
+    {
+      "id": "jd-movie-8",
+      "description": "Movie poster 8",
+      "imageUrl": "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "movie poster"
+    },
+    {
+      "id": "jd-tourist-1",
+      "description": "Tourist place Mumbai",
+      "imageUrl": "https://images.unsplash.com/photo-1544214036-5aaeb9e32d11?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2l0eSUyMHNreWxpbmV8ZW58MHx8fHwxNzU5NzExNjk1fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "city skyline"
+    },
+    {
+      "id": "jd-tourist-2",
+      "description": "Tourist place Pune",
+      "imageUrl": "https://images.unsplash.com/photo-1616728775583-b19a6af673c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxoaXN0b3JpYyUyMGJ1aWxkaW5nfGVufDB8fHx8MTc2MTYxNzM0NHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "historic building"
+    },
+    {
+      "id": "jd-tourist-3",
+      "description": "Tourist place Nashik",
+      "imageUrl": "https://images.unsplash.com/photo-1603766806347-54cdf3745953?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0ZW1wbGV8ZW58MHx8fHwxNzYxNjYzMzQwfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "temple"
+    },
+    {
+      "id": "jd-tourist-4",
+      "description": "Tourist place Ahmedabad",
+      "imageUrl": "https://images.unsplash.com/photo-1615406020658-6c4b805f1f30?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb2Rlcm4lMjBhcmNoaXRlY3R1cmV8ZW58MHx8fHwxNzU5NzY4MDg2fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "modern architecture"
+    },
+    {
+      "id": "jd-tourist-5",
+      "description": "Tourist place Goa",
+      "imageUrl": "https://images.unsplash.com/photo-1505142468610-359e7d316be0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxiZWFjaHxlbnwwfHx8fDE3NjE2MzU5MDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "beach"
+    },
+    {
+      "id": "jd-tourist-6",
+      "description": "Tourist place Gokarna",
+      "imageUrl": "https://images.unsplash.com/photo-1713765673975-8e9e85bb897f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxiZWFjaCUyMHRlbXBsZXxlbnwwfHx8fDE3NTk3Nzc1MzN8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "beach temple"
+    },
+    {
+      "id": "jd-tourist-7",
+      "description": "Tourist place Ujjain",
+      "imageUrl": "https://images.unsplash.com/photo-1665332025142-54d6daee4173?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhbmNpZW50JTIwdGVtcGxlfGVufDB8fHx8MTc2MTYzOTI4N3ww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "ancient temple"
+    },
+    {
+      "id": "jd-tourist-8",
+      "description": "Tourist place Hampi",
+      "imageUrl": "https://images.unsplash.com/photo-1559489110-40a90ee4e70a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cnVpbnN8ZW58MHx8fHwxNzYxNjYzMzQwfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "ruins"
+    },
+    {
+      "id": "jd-popular-1",
+      "description": "Popular search Estate Agent Rental",
+      "imageUrl": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxyZWFsJTIwZXN0YXRlfGVufDB8fHx8MTc2MTU2MDE4OHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "real estate"
+    },
+    {
+      "id": "jd-popular-2",
+      "description": "Popular search Estate Agent Residence",
+      "imageUrl": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxob3VzZXxlbnwwfHx8fDE3NjE1OTIxMTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "house"
+    },
+    {
+      "id": "jd-popular-3",
+      "description": "Popular search Interior Designers",
+      "imageUrl": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bGl2aW5nJTIwcm9vbXxlbnwwfHx8fDE3NjE1NzMyODV8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "living room"
+    },
+    {
+      "id": "jd-popular-4",
+      "description": "Popular search Real Estate Agents",
+      "imageUrl": "https://images.unsplash.com/photo-1638023074726-e7dda9798ca7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxyZWFsdG9yfGVufDB8fHx8MTc2MTY2MzM0MHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "realtor"
+    },
+    {
+      "id": "jd-popular-5",
+      "description": "Popular search Banquet Halls",
+      "imageUrl": "https://images.unsplash.com/photo-1666951833461-71fc128b6810?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxmb29kJTIwY2F0ZXJpbmd8ZW58MHx8fHwxNzU5Nzc2ODQ1fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "food catering"
+    },
+    {
+      "id": "jd-popular-6",
+      "description": "Popular search Caterers",
+      "imageUrl": "https://images.unsplash.com/photo-1689343118020-21f3655f807a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjYXRlcmluZyUyMGZvb2R8ZW58MHx8fHwxNzU5NzU5NDA3fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "catering food"
+    },
+    {
+      "id": "jd-popular-7",
+      "description": "Popular search Pathology Labs",
+      "imageUrl": "https://images.unsplash.com/photo-1599727277757-3f54e54ea618?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bGFib3JhdG9yeXxlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "laboratory"
+    },
+    {
+      "id": "jd-popular-8",
+      "description": "Popular search Dentists",
+      "imageUrl": "https://images.unsplash.com/photo-1643916800611-1302e8d27c38?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxkZW50aXN0JTIwb2ZmaWNlfGVufDB8fHx8MTc2MTY2MDg1NHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "dentist office"
+    },
+    {
+      "id": "jd-popular-9",
+      "description": "Popular search Gynaecologist",
+      "imageUrl": "https://images.unsplash.com/photo-1512678080530-7760d81faba6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxkb2N0b3IlMjBvZmZpY2V8ZW58MHx8fHwxNzU5NzYzMzIwfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "doctor office"
+    },
+    {
+      "id": "jd-popular-10",
+      "description": "Popular search Physiotherapists",
+      "imageUrl": "https://images.unsplash.com/photo-1706353399656-210cca727a33?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwaHlzaW90aGVyYXB5fGVufDB8fHx8MTc2MTY2MzM0MHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "physiotherapy"
+    },
+    {
+      "id": "jd-recent-1",
+      "description": "Recent activity Hotel",
+      "imageUrl": "https://images.unsplash.com/photo-1671739961758-70194a015aa8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8aG90ZWwlMjBidWlsZGluZ3xlbnwwfHx8fDE3NTk3Njk1OTd8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "hotel building"
+    },
+    {
+      "id": "jd-recent-2",
+      "description": "Recent activity DTH",
+      "imageUrl": "https://images.unsplash.com/photo-1526666923127-b2970f64b422?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzYXRlbGxpdGUlMjBkaXNofGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "satellite dish"
+    },
+    {
+      "id": "jd-recent-3",
+      "description": "Recent activity Loans",
+      "imageUrl": "https://images.unsplash.com/photo-1620202304821-1f4f58199274?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZmluYW5jZSUyMG1vbmV5fGVufDB8fHx8MTc1OTc3ODIwNHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "finance money"
+    },
+    {
+      "id": "jd-recent-4",
+      "description": "Recent activity Lottery",
+      "imageUrl": "https://images.unsplash.com/photo-1632227127406-e19b7dfbbf32?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxsb3R0ZXJ5JTIwdGlja2V0fGVufDB8fHx8MTc2MTY2MzM0MHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "lottery ticket"
+    },
+    {
+      "id": "jd-recent-5",
+      "description": "Recent activity Credit Card",
+      "imageUrl": "https://images.unsplash.com/photo-1589758438368-0ad531db3366?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjcmVkaXQlMjBjYXJkfGVufDB8fHx8MTc1OTc0MTQyN3ww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "credit card"
+    },
+    {
+      "id": "jd-recent-6",
+      "description": "Recent activity Money Transfer",
+      "imageUrl": "https://images.unsplash.com/photo-1681826292838-c37fbd22263a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtb25leSUyMHRyYW5zZmVyfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "money transfer"
+    },
+    {
+      "id": "jd-article-1",
+      "description": "Article 1",
+      "imageUrl": "https://images.unsplash.com/photo-1620680779930-e74c15c8f7a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhcnRpY2xlfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "article"
+    },
+    {
+      "id": "jd-article-2",
+      "description": "Article 2",
+      "imageUrl": "https://images.unsplash.com/photo-1558174685-430919a96c8d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YXJ0aWNsZXxlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "article"
+    },
+    {
+      "id": "jd-article-3",
+      "description": "Article 3",
+      "imageUrl": "https://images.unsplash.com/photo-1623039405147-547794f92e9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhcnRpY2xlfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "article"
+    },
+    {
+      "id": "jd-cat-restaurant-img",
+      "imageUrl": "https://images.unsplash.com/photo-1540432797114-187727adf19b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxmb29kJTIwcGxhdGV8ZW58MHx8fHwxNzYxNjU2Mzc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "food plate"
+    },
+    {
+      "id": "jd-cat-hotel-img",
+      "imageUrl": "https://images.unsplash.com/photo-1690935986319-c11e6cae84f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxob3RlbCUyMGJlZHxlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hotel bed"
+    },
+    {
+      "id": "jd-cat-spa-img",
+      "imageUrl": "https://images.unsplash.com/photo-1742762213818-3cc736b2d79c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzcGElMjBzdG9uZXN8ZW58MHx8fHwxNzYxNjU2ODI2fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "spa stones"
+    },
+    {
+      "id": "jd-cat-decor-img",
+      "imageUrl": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxob21lJTIwZGVjb3J8ZW58MHx8fHwxNzYxNjYzMzQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "home decor"
+    },
+    {
+      "id": "jd-cat-wedding-img",
+      "imageUrl": "https://images.unsplash.com/photo-1661697522366-fa6c8dfb0e4f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwYXJ0eSUyMHBvcHBlcnxlbnwwfHx8fDE3NTk3NTc0NTJ8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "party popper"
+    },
+    {
+      "id": "jd-cat-education-img",
+      "imageUrl": "https://images.unsplash.com/photo-1658235081562-a7f50e7e05b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxncmFkdWF0aW9uJTIwY2FwfGVufDB8fHx8MTc1OTc3NTgxM3ww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "graduation cap"
+    },
+    {
+      "id": "jd-cat-rent-img",
+      "imageUrl": "https://images.unsplash.com/photo-1615404420216-cc423164563f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmb3IlMjByZW50fGVufDB8fHx8MTc2MTY2MzM0MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "for rent"
+    },
+    {
+      "id": "jd-cat-hospital-img",
+      "imageUrl": "https://images.unsplash.com/photo-1597807037496-c56a1d8bc29a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8aG9zcGl0YWwlMjBidWlsZGluZ3xlbnwwfHx8fDE3NjE1NTg1ODF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hospital building"
+    },
+    {
+      "id": "jd-cat-contractor-img",
+      "imageUrl": "https://images.unsplash.com/photo-1513692398020-cbaea622c427?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjb25zdHJ1Y3Rpb24lMjB3b3JrZXJ8ZW58MHx8fHwxNzYxNjQyMjc3fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "construction worker"
+    },
+    {
+      "id": "jd-cat-pet-img",
+      "imageUrl": "https://images.unsplash.com/photo-1534551767192-78b8dd45b51b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkb2clMjBwYXd8ZW58MHx8fHwxNzYxNTg5MjM3fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "dog paw"
+    },
+    {
+      "id": "jd-cat-hostel-img",
+      "imageUrl": "https://images.unsplash.com/photo-1709805619372-40de3f158e83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxidW5rJTIwYmVkc3xlbnwwfHx8fDE3NjE2NjMzNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bunk beds"
+    },
+    {
+      "id": "jd-cat-estate-img",
+      "imageUrl": "https://images.unsplash.com/flagged/photo-1564767609424-270b9df918e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxob3VzZSUyMGtleXxlbnwwfHx8fDE3NjE2NjMzNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "house key"
+    },
+    {
+      "id": "jd-cat-dentist-img",
+      "imageUrl": "https://images.unsplash.com/photo-1670250492416-570b5b7343b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx0b290aHxlbnwwfHx8fDE3NjE2NjMzNDB8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "tooth"
+    },
+    {
+      "id": "jd-cat-gym-img",
+      "imageUrl": "https://images.unsplash.com/photo-1612099197070-4db4ab9abcd4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxkdW1iYmVsbHxlbnwwfHx8fDE3NjE1NzQ3NTN8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "dumbbell"
+    },
+    {
+      "id": "jd-cat-loan-img",
+      "imageUrl": "https://images.unsplash.com/photo-1563296299-f55c4be21f95?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bW9uZXklMjBiYWd8ZW58MHx8fHwxNzYxNjQ2NjA4fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "money bag"
+    },
+    {
+      "id": "jd-cat-event-img",
+      "imageUrl": "https://images.unsplash.com/photo-1661697522366-fa6c8dfb0e4f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwYXJ0eSUyMHBvcHBlcnxlbnwwfHx8fDE3NTk3NTc0NTJ8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "party popper"
+    },
+    {
+      "id": "jd-cat-driving-img",
+      "imageUrl": "https://images.unsplash.com/photo-1612805144400-88c7821bf36f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdGVlcmluZyUyMHdoZWVsfGVufDB8fHx8MTc1OTc2MjI1Mnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "steering wheel"
+    },
+    {
+      "id": "jd-cat-packers-img",
+      "imageUrl": "https://images.unsplash.com/photo-1624137527136-66e631bdaa0e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtb3ZpbmclMjBib3hlc3xlbnwwfHx8fDE3NjE1ODQ2Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "moving boxes"
+    },
+    {
+      "id": "jd-cat-courier-img",
+      "imageUrl": "https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxkZWxpdmVyeSUyMHRydWNrfGVufDB8fHx8MTc2MTYzODQzNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "delivery truck"
+    },
+    {
+      "id": "jd-cat-popular-img",
+      "imageUrl": "https://images.unsplash.com/photo-1505506874110-6a7a69069a08?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzdGFyfGVufDB8fHx8MTc2MTU5MDE5OXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "star"
+    },
+    {
+      "id": "bridal-requisite",
+      "imageUrl": "https://images.unsplash.com/photo-1580421383958-5a3c06575a5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxicmlkYWwlMjBkcmVzc3xlbnwwfHx8fDE3NjE2NjMzNDB8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "bridal dress"
+    },
+    {
+      "id": "beauty-parlour",
+      "imageUrl": "https://images.unsplash.com/photo-1519415387722-a1c3bbef716c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxiZWF1dHklMjBwYXJsb3VyfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "beauty parlour"
+    },
+    {
+      "id": "salon",
+      "imageUrl": "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxoYWlyJTIwc2Fsb258ZW58MHx8fHwxNzU5Nzc3MjI5fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "hair salon"
+    },
+    {
+      "id": "ac-service",
+      "imageUrl": "https://images.unsplash.com/photo-1647022528152-52ed9338611d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxBQyUyMHVuaXR8ZW58MHx8fHwxNzYxNTU4MjQ5fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "AC unit"
+    },
+    {
+      "id": "car-service",
+      "imageUrl": "https://images.unsplash.com/photo-1625047509168-a7026f36de04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjYXIlMjByZXBhaXJ8ZW58MHx8fHwxNzYxNTcxMTUwfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "car repair"
+    },
+    {
+      "id": "bike-service",
+      "imageUrl": "https://images.unsplash.com/photo-1651152849966-c4d04f089981?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb3RvcmN5Y2xlJTIwcmVwYWlyfGVufDB8fHx8MTc2MTYzNTkxMXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "motorcycle repair"
+    },
+    {
+      "id": "grocery",
+      "imageUrl": "https://images.unsplash.com/photo-1540340061722-9293d5163008?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Z3JvY2VyeSUyMHN0b3JlfGVufDB8fHx8MTc2MTYwMDgwOHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "grocery store"
+    },
+    {
+      "id": "jd-hero-repairs-person",
+      "imageUrl": "https://images.unsplash.com/photo-1581972327480-e3764d31e5e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxlbGVjdHJpY2lhbnxlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "electrician"
+    },
+    {
+      "id": "sunny-dermatologists",
+      "imageUrl": "https://images.unsplash.com/photo-1573461160327-b450ce3d8e7f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8c2tpbiUyMGNhcmV8ZW58MHx8fHwxNzU5NzU5MjkwfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "skin care"
+    },
+    {
+      "id": "sunny-water-suppliers",
+      "imageUrl": "https://images.unsplash.com/photo-1616118133712-8c947f7b822c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx3YXRlciUyMGJvdHRsZXxlbnwwfHx8fDE3NTk3NjI3MjN8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "water bottle"
+    },
+    {
+      "id": "sunny-allergy-doctors",
+      "imageUrl": "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZG9jdG9yfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "doctor"
+    },
+    {
+      "id": "sunny-fan-dealers",
+      "imageUrl": "https://images.unsplash.com/photo-1568392816241-44d223d4d490?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxlbGVjdHJpYyUyMGZhbnxlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "electric fan"
+    },
+    {
+      "id": "sunny-juice-centres",
+      "imageUrl": "https://images.unsplash.com/photo-1694879115278-df814fc68628?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxqdWljZSUyMGdsYXNzfGVufDB8fHx8MTc1OTc2NjcwNHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "juice glass"
+    },
+    {
+      "id": "sunny-mineral-water",
+      "imageUrl": "https://images.unsplash.com/photo-1523362628745-0c100150b504?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx3YXRlciUyMGJvdHRsZXN8ZW58MHx8fHwxNzYxNjYzMzQxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "water bottles"
+    },
+    {
+      "id": "sunny-deep-freezer",
+      "imageUrl": "https://images.unsplash.com/photo-1601599967100-f16100982063?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxmcmVlemVyfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "freezer"
+    },
+    {
+      "id": "sunny-gardening",
+      "imageUrl": "https://images.unsplash.com/photo-1661712663315-d851d40bcf07?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxnYXJkZW5pbmclMjB0b29sc3xlbnwwfHx8fDE3NTk3Nzc3NzR8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "gardening tools"
+    },
+    {
+      "id": "sunny-gastroenterologists",
+      "imageUrl": "https://images.unsplash.com/photo-1642975967602-653d378f3b5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxkb2N0b3IlMjBjaGFydHxlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "doctor chart"
+    },
+    {
+      "id": "sunny-energy-drinks",
+      "imageUrl": "https://images.unsplash.com/photo-1642532560930-77d5018c68f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxlbmVyZ3klMjBkcmlua3xlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "energy drink"
+    },
+    {
+      "id": "sunny-shorts",
+      "imageUrl": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzaG9ydHN8ZW58MHx8fHwxNzYxNjYzMzQxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "shorts"
+    },
+    {
+      "id": "free-listing-business-details",
+      "description": "Image for business details step in free listing form",
+      "imageUrl": "/business_details.webp",
+      "imageHint": "business store"
+    },
+    {
+      "id": "free-listing-contact-details",
+      "description": "Image for contact details step in free listing form",
+      "imageUrl": "/add_contact.webp",
+      "imageHint": "contact us"
+    },
+    {
+      "id": "free-listing-business-timings",
+      "description": "Image for business timings step in free listing form",
+      "imageUrl": "/business_detail.webp",
+      "imageHint": "clock open sign"
+    },
+    {
+      "id": "no-favourites-illustration",
+      "description": "Illustration for empty favourites page",
+      "imageUrl": "https://images.unsplash.com/photo-1664455340023-214c33a9d0bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzaG9wcGluZyUyMGNhcnR8ZW58MHx8fHwxNzYxNTUyMDgwfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "shopping cart"
+    },
+    {
+      "id": "profile-image-placeholder",
+      "description": "Placeholder for user profile image",
+      "imageUrl": "https://images.unsplash.com/photo-1541789094913-f3809a8f3ba5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkZXNlcnQlMjBsYW5kc2NhcGV8ZW58MHx8fHwxNzYxNTg5MDIyfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "desert landscape"
+    },
+    {
+      "id": "business-profile-image",
+      "description": "Placeholder for business profile image",
+      "imageUrl": "https://images.unsplash.com/photo-1696738061271-401a7f09e51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxvZmZpY2UlMjBidWlsZGluZ3xlbnwwfHx8fDE3NjE2MDQxOTZ8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "office building"
+    },
+    {
+      "id": "dashboard-carousel-1",
+      "description": "Dashboard carousel image 1",
+      "imageUrl": "https://images.unsplash.com/photo-1512532019-3bdca31ba6ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YnVzaW5lc3MlMjBhZHZlcnRpc2VtZW50fGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "business advertisement"
+    },
+    {
+      "id": "dashboard-carousel-2",
+      "description": "Dashboard carousel image 2",
+      "imageUrl": "https://images.unsplash.com/photo-1601892870288-773acc53dbc8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzcGVjaWFsJTIwb2ZmZXJ8ZW58MHx8fHwxNzYxNTc4MTU1fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "special offer"
+    },
+    {
+      "id": "dashboard-carousel-3",
+      "description": "Dashboard carousel image 3",
+      "imageUrl": "https://images.unsplash.com/photo-1712903276879-9de15f1b9e81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwcm9tb3RlJTIwYnVzaW5lc3N8ZW58MHx8fHwxNzYxNjYzMzQxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "promote business"
+    },
+    {
+      "id": "whatsapp-icon",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg",
+      "imageHint": "whatsapp logo"
+    },
+    {
+      "id": "add-offer-graphic",
+      "description": "Graphic for add offer card",
+      "imageUrl": "https://images.unsplash.com/photo-1612538498613-35c5c8d675c4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxkaXNjb3VudCUyMHRhZ3N8ZW58MHx8fHwxNzYxNjYzMzQxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "discount tags"
+    },
+    {
+      "id": "address-icon",
+      "imageUrl": "https://images.unsplash.com/photo-1736117703416-f260ee174bac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxtYXAlMjBsb2NhdGlvbnxlbnwwfHx8fDE3NjE1OTE5NDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "map location"
+    },
+    {
+      "id": "catalogue-icon",
+      "imageUrl": "https://images.unsplash.com/photo-1703170815991-4737f0d0c8fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxkb2N1bWVudCUyMGxpc3R8ZW58MHx8fHwxNzYxNjYwMDMyfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "document list"
+    },
+    {
+      "id": "category-icon",
+      "imageUrl": "https://images.unsplash.com/photo-1524351543168-8e38787614e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxncmlkfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "grid"
+    },
+    {
+      "id": "qr-code-icon",
+      "imageUrl": "https://images.unsplash.com/photo-1605098293544-25f4c32344c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxRUiUyMGNvZGV8ZW58MHx8fHwxNzYxNTUzNTczfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "QR code"
+    },
+    {
+      "id": "leads-icon",
+      "imageUrl": "https://images.unsplash.com/photo-1543286386-2e659306cd6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxncmFwaCUyMHVwfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "graph up"
+    },
+    {
+      "id": "turnover-icon",
+      "imageUrl": "https://images.unsplash.com/photo-1593672715438-d88a70629abe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtb25leSUyMHN0YWNrfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "money stack"
+    },
+    {
+      "id": "kyc-icon",
+      "imageUrl": "https://images.unsplash.com/photo-1654931799020-ce7cf3f4a2c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkb2N1bWVudCUyMGNoZWNrfGVufDB8fHx8MTc2MTYzNzI3OXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "document check"
+    },
+    {
+      "id": "contact-icon",
+      "imageUrl": "https://images.unsplash.com/photo-1698067929117-9789e0719cbe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YWRkcmVzcyUyMGJvb2t8ZW58MHx8fHwxNzYxNjYzMzQxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "address book"
+    },
+    {
+      "id": "whatsapp-large-icon",
+      "imageUrl": "https://images.unsplash.com/photo-1725798451557-fc60db3eb6a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjaGF0JTIwYnViYmxlfGVufDB8fHx8MTc2MTYxOTY4MHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "chat bubble"
+    },
+    {
+      "id": "digital-catalogue-icon",
+      "imageUrl": "https://images.unsplash.com/photo-1592839961631-0351c10a0b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxvbmxpbmUlMjBjYXRhbG9nfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "online catalog"
+    },
+    {
+      "id": "employees-icon",
+      "imageUrl": "https://images.unsplash.com/photo-1590482930637-c8d907ce02bb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx0ZWFtJTIwdXNlcnN8ZW58MHx8fHwxNzYxNjYzMzQyfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "team users"
+    },
+    {
+      "id": "success-1",
+      "imageUrl": "https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxwb3J0cmFpdCUyMG1hbnxlbnwwfHx8fDE3NjE2NDExMDB8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "portrait man"
+    },
+    {
+      "id": "success-2",
+      "imageUrl": "https://images.unsplash.com/photo-1623366302587-b38b1ddaefd9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxwb3J0cmFpdCUyMG1hbnxlbnwwfHx8fDE3NjE2NDExMDB8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "portrait man"
+    },
+    {
+      "id": "success-3",
+      "imageUrl": "https://images.unsplash.com/photo-1669844444850-5acd7e8c71c5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwb3J0cmFpdCUyMHdvbWFufGVufDB8fHx8MTc2MTYwNjk5NHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "portrait woman"
+    },
+    {
+      "id": "success-4",
+      "imageUrl": "https://images.unsplash.com/photo-1656338997878-279d71d48f6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwb3J0cmFpdCUyMG1hbnxlbnwwfHx8fDE3NjE2NDExMDB8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "portrait man"
+    },
+    {
+      "id": "success-5",
+      "imageUrl": "https://images.unsplash.com/photo-1615538785945-6625ccdb4b25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwb3J0cmFpdCUyMHdvbWFufGVufDB8fHx8MTc2MTYwNjk5NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "portrait woman"
+    },
+    {
+      "id": "website-banner",
+      "imageUrl": "https://images.unsplash.com/photo-1708939582011-ddbd2ff61b40?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3ZWJzaXRlJTIwc2NyZWVuc2hvdHxlbnwwfHx8fDE3NjE2MTk0MTh8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "website screenshot"
+    },
+    {
+      "id": "more-options-edit",
+      "imageUrl": "https://images.unsplash.com/photo-1616861771635-49063a4636ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxlZGl0JTIwZG9jdW1lbnR8ZW58MHx8fHwxNzYxNjYzMzQxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "edit document"
+    },
+    {
+      "id": "more-options-promote",
+      "imageUrl": "https://images.unsplash.com/photo-1614728263952-84ea256f9679?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxyb2NrZXQlMjBsYXVuY2h8ZW58MHx8fHwxNzYxNjA4MzM1fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "rocket launch"
+    },
+    {
+      "id": "more-options-booster",
+      "imageUrl": "https://images.unsplash.com/photo-1714490266649-f2d38655a35f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxncmFwaCUyMHVwfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "graph up"
+    },
+    {
+      "id": "more-options-ratings",
+      "imageUrl": "https://images.unsplash.com/photo-1760466652714-426689a95e20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzdGFyJTIwcmF0aW5nfGVufDB8fHx8MTc2MTY2MzM0Mnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "star rating"
+    },
+    {
+      "id": "more-options-faq",
+      "imageUrl": "https://images.unsplash.com/photo-1633613286848-e6f43bbafb8d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxxdWVzdGlvbiUyMG1hcmt8ZW58MHx8fHwxNzYxNjU1MzAyfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "question mark"
+    },
+    {
+      "id": "video-performance",
+      "imageUrl": "https://images.unsplash.com/photo-1634743556192-d19f0c69ff3a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxkYXNoYm9hcmQlMjBzY3JlZW5zaG90fGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "dashboard screenshot"
+    },
+    {
+      "id": "video-rate-enquiry",
+      "imageUrl": "https://images.unsplash.com/photo-1560785496-321917f24016?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxyYXRpbmclMjBmb3JtfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "rating form"
+    },
+    {
+      "id": "video-enquiry-card",
+      "imageUrl": "https://images.unsplash.com/photo-1701518035740-a33935aeb3ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtZXNzYWdlJTIwaW5ib3h8ZW58MHx8fHwxNzYxNjYzMzQxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "message inbox"
+    },
+    {
+      "id": "video-all-enquiries",
+      "imageUrl": "https://images.unsplash.com/photo-1711526601887-a8d9a87387c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxsaXN0JTIwcGFnZXxlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "list page"
+    },
+    {
+      "id": "leads-website-promo",
+      "imageUrl": "https://images.unsplash.com/photo-1557186817-c11ad50d5b41?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3ZWJzaXRlJTIwbGFwdG9wfGVufDB8fHx8MTc2MTU4MDM0OHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "website laptop"
+    },
+    {
+      "id": "leads-business-performance",
+      "imageUrl": "https://images.unsplash.com/photo-1711097383282-28097ae16b1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMGNoYXJ0fGVufDB8fHx8MTc2MTU3MTA5MHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "business chart"
+    },
+    {
+      "id": "imboom-digital-logo",
+      "imageUrl": "https://images.unsplash.com/photo-1562783912-21ad31ee2a83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjb21wYW55JTIwbG9nb3xlbnwwfHx8fDE3NjE2NTE1Mzh8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "company logo"
+    },
+    {
+      "id": "tolentribe-technologies-logo",
+      "imageUrl": "https://images.unsplash.com/photo-1549924231-f129b911e442?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjb21wYW55JTIwbG9nb3xlbnwwfHx8fDE3NjE2NTE1Mzh8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "company logo"
+    },
+    {
+      "id": "enquiry-homepage",
+      "imageUrl": "https://images.unsplash.com/photo-1611461314230-5a55d32e4628?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxob21lcGFnZSUyMG1vY2t1cHxlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "homepage mockup"
+    },
+    {
+      "id": "enquiries-pages",
+      "imageUrl": "https://images.unsplash.com/photo-1759505017950-25e0733b9e68?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx1aSUyMHBhZ2VzfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "ui pages"
+    },
+    {
+      "id": "enquiry-notification",
+      "imageUrl": "https://images.unsplash.com/photo-1643845892686-30c241c3938c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxub3RpZmljYXRpb24lMjBpY29ufGVufDB8fHx8MTc2MTU3NTEzOXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "notification icon"
+    },
+    {
+      "id": "rating-icon",
+      "imageUrl": "https://images.unsplash.com/photo-1754724606489-00ff6a5b9ed8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8c3RhciUyMGljb258ZW58MHx8fHwxNzYxNjYzMzQxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "star icon"
+    },
+    {
+      "id": "reviews-icon",
+      "imageUrl": "https://images.unsplash.com/photo-1725798451557-fc60db3eb6a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjaGF0JTIwYnViYmxlfGVufDB8fHx8MTc2MTYxOTY4MHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "chat bubble"
+    },
+    {
+      "id": "photos-icon",
+      "imageUrl": "https://images.unsplash.com/photo-1658842244540-883aff68fb78?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxpbWFnZSUyMGljb258ZW58MHx8fHwxNzYxNjYzMzQxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "image icon"
+    },
+    {
+      "id": "yd-contact",
+      "imageUrl": "https://images.unsplash.com/photo-1675552561434-8403ed83dd2b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtYWlsJTIwZW52ZWxvcGV8ZW58MHx8fHwxNzYxNjYzMzQxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "mail envelope"
+    },
+    {
+      "id": "yd-address",
+      "imageUrl": "https://images.unsplash.com/photo-1624393341771-37ff80c654c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzdG9yZWZyb250JTIwaWNvbnxlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "storefront icon"
+    },
+    {
+      "id": "yd-whatsapp",
+      "imageUrl": "https://images.unsplash.com/photo-1724921983434-513c0b411e88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2hhdCUyMGJ1YmJsZXxlbnwwfHx8fDE3NjE2MTk2ODB8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "chat bubble"
+    },
+    {
+      "id": "yd-categories",
+      "imageUrl": "https://images.unsplash.com/photo-1759210394481-61b92cdac046?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxncmlkJTIwbGF5b3V0fGVufDB8fHx8MTc2MTY2MTcxNnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "grid layout"
+    },
+    {
+      "id": "yd-photos",
+      "imageUrl": "https://images.unsplash.com/photo-1755444314262-2e6c7ea83b98?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwb2xhcm9pZCUyMHBpY3R1cmV8ZW58MHx8fHwxNzYxNjYzMzQzfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "polaroid picture"
+    },
+    {
+      "id": "yd-video",
+      "imageUrl": "https://images.unsplash.com/photo-1551817958-11e0f7bbea9c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwbGF5JTIwYnV0dG9ufGVufDB8fHx8MTc2MTY2MzM0Mnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "play button"
+    },
+    {
+      "id": "yd-products",
+      "imageUrl": "https://images.unsplash.com/photo-1594969155368-f19485a9d88c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwcmljZSUyMHRhZ3xlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "price tag"
+    },
+    {
+      "id": "yd-reviews",
+      "imageUrl": "https://images.unsplash.com/photo-1760466652714-426689a95e20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzdGFyJTIwcmF0aW5nfGVufDB8fHx8MTc2MTY2MzM0Mnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "star rating"
+    },
+    {
+      "id": "yd-social",
+      "imageUrl": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8c2hhcmUlMjBpY29ufGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "share icon"
+    },
+    {
+      "id": "yd-website",
+      "imageUrl": "https://images.unsplash.com/photo-1660715745143-0bae32bb2029?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxnbG9iZSUyMGljb258ZW58MHx8fHwxNzYxNjYzMzQxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "globe icon"
+    },
+    {
+      "id": "yd-year",
+      "imageUrl": "https://images.unsplash.com/photo-1632152943364-728220ee6b4a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FsZW5kYXIlMjBpY29ufGVufDB8fHx8MTc2MTU2MTA3Nnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "calendar icon"
+    },
+    {
+      "id": "yd-turnover",
+      "imageUrl": "https://images.unsplash.com/photo-1585752475238-52db8826b2f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cnVwZWUlMjBzeW1ib2x8ZW58MHx8fHwxNzYxNjAyNDUwfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "rupee symbol"
+    },
+    {
+      "id": "yd-employees",
+      "imageUrl": "https://images.unsplash.com/photo-1690138871282-b84c8bb4244d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx1c2VycyUyMGljb258ZW58MHx8fHwxNzYxNjYzMzQxfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "users icon"
+    },
+    {
+      "id": "yd-kyc",
+      "imageUrl": "https://images.unsplash.com/photo-1758928807855-beedbddad338?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxkb2N1bWVudCUyMGNoZWNrfGVufDB8fHx8MTc2MTYzNzI3OXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "document check"
+    },
+    {
+      "id": "no-data-illustration",
+      "description": "Illustration for no data",
+      "imageUrl": "https://images.unsplash.com/photo-1717994818194-c5a474939403?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxlbXB0eSUyMGRvY3VtZW50fGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "empty document"
+    },
+    {
+      "id": "no-reviews-illustration",
+      "description": "Illustration for no reviews",
+      "imageUrl": "https://images.unsplash.com/photo-1758888592043-ce4263ccfcd6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzYWQlMjBkb2N1bWVudHxlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "sad document"
+    },
+    {
+      "id": "no-passbook-illustration",
+      "description": "Illustration for no passbook details",
+      "imageUrl": "https://images.unsplash.com/photo-1758523418820-a492bf647c63?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzYWQlMjBkb2N1bWVudHxlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "sad document"
+    },
+    {
+      "id": "runtime-jd",
+      "imageUrl": "https://images.unsplash.com/photo-1667372335879-9b5c551232e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxzZXJ2ZXIlMjBjb2RlfGVufDB8fHx8MTc2MTU5NjQwMnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "server code"
+    },
+    {
+      "id": "runtime-prime",
+      "imageUrl": "https://images.unsplash.com/photo-1562408590-e32931084e23?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjaXJjdWl0JTIwYm9hcmR8ZW58MHx8fHwxNzYxNTgxODU2fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "circuit board"
+    },
+    {
+      "id": "runtime-omni",
+      "imageUrl": "https://images.unsplash.com/photo-1664526937033-fe2c11f1be25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bmV0d29yayUyMG5vZGVzfGVufDB8fHx8MTc2MTY1MDU3OHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "network nodes"
+    },
+    {
+      "id": "add-service-icon",
+      "description": "Icon for adding a service to the catalogue",
+      "imageUrl": "https://images.unsplash.com/photo-1578927569024-a6c9c5a1122a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxoYW5kJTIwZ2VhcnxlbnwwfHx8fDE3NjE2NjMzNDJ8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "hand gear"
+    },
+    {
+      "id": "certificate-sample",
+      "description": "Sample certificate image",
+      "imageUrl": "https://images.unsplash.com/photo-1616861771635-49063a4636ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2VydGlmaWNhdGUlMjBkb2N1bWVudHxlbnwwfHx8fDE3NjE1NTk2NzB8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "certificate document"
+    },
+    {
+      "id": "award-sample",
+      "description": "Sample award image",
+      "imageUrl": "https://images.unsplash.com/photo-1656978766399-1e117a291918?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhd2FyZCUyMHRyb3BoeXxlbnwwfHx8fDE3NjE2NjMzNDJ8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "award trophy"
+    },
+    {
+      "id": "visa-mastercard-rupay",
+      "description": "Visa, Mastercard, and Rupay logos",
+      "imageUrl": "https://images.unsplash.com/photo-1560472355-536de3962603?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjcmVkaXQlMjBjYXJkc3xlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "credit cards"
+    },
+    {
+      "id": "amex-logo",
+      "description": "American Express logo",
+      "imageUrl": "https://images.unsplash.com/photo-1578670812003-60745e2c2ea9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjcmVkaXQlMjBjYXJkfGVufDB8fHx8MTc2MTY0OTQ0NHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "credit card"
+    },
+    {
+      "id": "diners-club-logo",
+      "description": "Diners Club logo",
+      "imageUrl": "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MXwxfHNlYXJjaHwxfHxjcmVkaXQlMjBjYXJkfGVufDB8fHx8MTc2MTY0OTQ0NHww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "credit card"
+    },
+    {
+      "id": "jiomoney-logo",
+      "description": "JioMoney logo",
+      "imageUrl": "https://images.unsplash.com/photo-1656523864170-d4a1b4a263b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3YWxsZXQlMjBsb2dvfGVufDB8fHx8MTc2MTU3MTE1Mnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "wallet logo"
+    },
+    {
+      "id": "paytm-logo",
+      "description": "Paytm logo",
+      "imageUrl": "https://images.unsplash.com/photo-1640441281085-9e2000f3d693?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx3YWxsZXQlMjBsb2dvfGVufDB8fHx8MTc2MTU3MTE1Mnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "wallet logo"
+    },
+    {
+      "id": "phonepe-logo",
+      "description": "PhonePe logo",
+      "imageUrl": "https://images.unsplash.com/photo-1640441281085-9e2000f3d693?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx3YWxsZXQlMjBsb2dvfGVufDB8fHx8MTc2MTU3MTE1Mnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "wallet logo"
+    },
+    {
+      "id": "amazon-pay-logo",
+      "description": "Amazon Pay logo",
+      "imageUrl": "https://images.unsplash.com/photo-1651928692943-5d837fccf061?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8d2FsbGV0JTIwbG9nb3xlbnwwfHx8fDE3NjE1NzExNTJ8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "wallet logo"
+    },
+    {
+      "id": "mobikwik-logo",
+      "description": "MobiKwik logo",
+      "imageUrl": "https://images.unsplash.com/photo-1570549667552-8a73ebf96469?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx3YWxsZXQlMjBsb2dvfGVufDB8fHx8MTc2MTU3MTE1Mnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "wallet logo"
+    },
+    {
+      "id": "no-invoices-illustration",
+      "description": "Illustration for no invoices found",
+      "imageUrl": "https://images.unsplash.com/photo-1616861771635-49063a4636ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxkb2N1bWVudCUyMHNlYXJjaHxlbnwwfHx8fDE3NjE2NjMzNDJ8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "document search"
+    },
+    {
+      "id": "no-offers-illustration",
+      "description": "Illustration for no offers found",
+      "imageUrl": "https://images.unsplash.com/photo-1494537176433-7a3c4ef2046f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxwcmljZSUyMHRhZ3xlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "price tag"
+    },
+    {
+      "id": "get-ratings-illustration",
+      "description": "Illustration for get ratings page",
+      "imageUrl": "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYW4lMjBob2xkaW5nJTIwcGhvbmV8ZW58MHx8fHwxNzYxNjYzMzQyfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "man holding phone"
+    },
+    {
+      "id": "rating-qr-code",
+      "description": "A sample QR code for rating a business",
+      "imageUrl": "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example",
+      "imageHint": "qr code"
+    },
+    {
+      "id": "biz-booster-mobile-banner",
+      "imageUrl": "https://images.unsplash.com/photo-1624439968568-dcd943a4544e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtb2JpbGUlMjBwaG9uZSUyMGFkfGVufDB8fHx8MTc2MTY2MzM0Mnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "mobile phone ad"
+    },
+    {
+      "id": "biz-booster-website-banner",
+      "imageUrl": "https://images.unsplash.com/photo-1659841064804-5f507b1b488a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3ZWJzaXRlJTIwYnJvd3NlciUyMGFkfGVufDB8fHx8MTc2MTY2MzM0Mnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "website browser ad"
+    },
+    {
+      "id": "biz-booster-combo-banner",
+      "imageUrl": "https://images.unsplash.com/photo-1721864428881-dbabb9ea0017?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8d2Vic2l0ZSUyMG1vYmlsZSUyMGFkfGVufDB8fHx8MTc2MTY2MzM0Mnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "website mobile ad"
+    },
+    {
+      "id": "biz-booster-business-website",
+      "imageUrl": "https://images.unsplash.com/photo-1603201667246-3c45012c6d17?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxsYXB0b3AlMjB3ZWJzaXRlfGVufDB8fHx8MTc2MTY2MzM0Mnww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "laptop website"
+    },
+    {
+      "id": "biz-booster-rating-certificate",
+      "imageUrl": "https://images.unsplash.com/photo-1761178334145-76c3d8ac30dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjZXJ0aWZpY2F0ZSUyMGF3YXJkfGVufDB8fHx8MTc2MTU3NDg2NXww&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "certificate award"
+    },
+    {
+      "id": "biz-booster-whatsapp-leads",
+      "imageUrl": "https://images.unsplash.com/photo-1619658535018-5a55d32e4628?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3aGF0c2FwcCUyMGNoYXR8ZW58MHx8fHwxNzYxNjYzMzQyfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "whatsapp chat"
+    },
+    {
+      "id": "biz-booster-verified-badge",
+      "imageUrl": "https://images.unsplash.com/photo-1644290260673-b4183cd97fe9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8dmVyaWZpZWQlMjBiYWRnZXxlbnwwfHx8fDE3NjE2NjMzNDN8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "verified badge"
+    },
+    {
+      "id": "biz-booster-trust-seal",
+      "imageUrl": "https://images.unsplash.com/photo-1649562065680-fa7a5a1c4318?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHx0cnVzdCUyMHNlYWx8ZW58MHx8fHwxNzYxNjYzMzQyfDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "trust seal"
+    },
+    {
+      "id": "map-placeholder",
+      "description": "Placeholder image for a map",
+      "imageUrl": "https://images.unsplash.com/photo-1744056360538-51821f1b19b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYXAlMjBpbGx1c3RyYXRpb258ZW58MHx8fHwxNzYxNTY1MzU2fDA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageHint": "map illustration"
+    },
+    {
+      "id": "category-placeholder",
+      "description": "Default placeholder for category icons",
+      "imageUrl": "https://images.unsplash.com/photo-1611001440648-e90aff42faa3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxpY29uJTIwYWJzdHJhY3R8ZW58MHx8fHwxNzYxNjg0MDM2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "icon abstract"
+    }
+  ]
+}
