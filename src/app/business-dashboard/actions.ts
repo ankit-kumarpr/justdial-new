@@ -111,26 +111,22 @@ export async function getKycStatusForVendor(vendorId: string, token: string): Pr
   }
 }
 
-export async function getBusinessHeaderInfo(businessId: string): Promise<{ name: string; city: string } | null> {
-    if (!businessId) return null;
-    
-    // Server-side actions can't directly read from localStorage.
-    // The token would need to be passed in from the component if this were a generic server action.
-    // However, since this is called from a server component context where we can't get the token,
-    // this approach won't work for authenticated endpoints. 
-    // We'll revert to Supabase for now, assuming it's the intended way for server components to fetch this.
-    const supabase = createSupabaseServerClient();
-    const { data, error } = await supabase
-        .from('vendors')
-        .select('businessName, city')
-        .eq('id', businessId)
-        .single();
-
-    if (error || !data) {
-        console.error('Error fetching business header info from Supabase:', error?.message);
-        return null;
+export async function getBusinessHeaderInfo(businessId: string, token: string): Promise<{ name: string | null; city: string | null; error: string | null; }> {
+    if (!businessId || !token) {
+        return { name: null, city: null, error: 'Business ID and token are required.' };
     }
-    return { name: data.businessName, city: data.city };
+    
+    try {
+        const result = await apiFetch(`/api/vendor/profile/business/${businessId}`, token, { cache: 'no-store' });
+        const business = result.data?.business;
+        if (!business) {
+            return { name: null, city: null, error: 'Business not found.' };
+        }
+        return { name: business.businessName, city: business.address?.city, error: null };
+    } catch (e: any) {
+        console.error("Error fetching business header info from API:", e.message);
+        return { name: null, city: null, error: e.message };
+    }
 }
 
 const locationSchema = z.object({
@@ -139,24 +135,29 @@ const locationSchema = z.object({
   lng: z.number(),
 });
 
-export async function getLocation(businessId: string): Promise<{ data: { latitude: number; longitude: number } | null, error: string | null}> {
-    if (!businessId) {
-        return { data: null, error: "Business ID is required." };
+export async function getLocation(businessId: string, token: string): Promise<{ data: { latitude: number; longitude: number } | null, error: string | null}> {
+    if (!businessId || !token) {
+        return { data: null, error: "Business ID and token are required." };
     }
-    const supabase = createSupabaseServerClient();
-    const { data, error } = await supabase
-        .from('vendor_locations')
-        .select('latitude, longitude')
-        .eq('vendor_id', businessId)
-        .single();
     
-    if (error && error.code !== 'PGRST116') { // PGRST116: "No rows found"
-        return { data: null, error: error.message };
+    try {
+        const result = await apiFetch(`/api/vendor/profile/business/${businessId}`, token);
+        const location = result.data?.business?.location;
+
+        if (location && location.coordinates && location.coordinates.length === 2) {
+            return { data: { latitude: location.coordinates[1], longitude: location.coordinates[0] }, error: null };
+        }
+        return { data: null, error: "Location coordinates not found." };
+    } catch(e: any) {
+        if (e.message.includes('404')) {
+             return { data: null, error: null };
+        }
+        console.error("Error fetching location:", e.message);
+        return { data: null, error: e.message };
     }
-    return { data, error: null };
 }
 
-export async function updateLocation(businessId: string, lat: number, lng: number): Promise<{ success: boolean; message: string }> {
+export async function updateLocation(businessId: string, token: string, lat: number, lng: number): Promise<{ success: boolean; message: string }> {
   
   const validatedFields = locationSchema.safeParse({ businessId, lat, lng });
 
@@ -168,20 +169,12 @@ export async function updateLocation(businessId: string, lat: number, lng: numbe
     };
   }
 
-  const supabase = createSupabaseServerClient();
-  
   try {
-    const { error } = await supabase
-      .from('vendor_locations')
-      .upsert({ 
-        vendor_id: businessId,
-        latitude: lat,
-        longitude: lng,
-        updated_at: new Date().toISOString()
-      }, { onConflict: 'vendor_id' });
+     await apiFetch(`/api/kyc/businessaddress/${businessId}`, token, {
+      method: 'PUT',
+      body: JSON.stringify({ latitude: lat, longitude: lng }),
+    });
 
-    if (error) throw error;
-    
     revalidatePath(`/business-dashboard?id=${businessId}`);
     
     return { 

@@ -1,4 +1,5 @@
 
+
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -30,7 +31,7 @@ export function RestaurantListItem({ restaurant }: RestaurantListItemProps) {
                 <div className="flex-grow">
                     {restaurant.sponsored && <p className="text-xs text-gray-500 mb-1">Sponsored</p>}
                     <h3 className="text-lg font-bold text-primary hover:text-primary/80">
-                        <Link href={`/business/${restaurant.id}`}>{restaurant.name}</Link>
+                        <Link href={`/business-profile?id=${restaurant.id}`}>{restaurant.name}</Link>
                     </h3>
                     <div className="flex items-center gap-2 mt-1">
                         <div className={`px-2 py-0.5 ${ratingColor} text-white rounded text-xs font-bold flex items-center gap-1`}>

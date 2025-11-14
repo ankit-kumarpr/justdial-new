@@ -1,4 +1,5 @@
 
+
 import Link from "next/link";
 import Image from "next/image";
 import type { Business } from "@/lib/types";
@@ -13,19 +14,26 @@ type BusinessCardProps = {
 };
 
 export function BusinessCard({ business }: BusinessCardProps) {
-  // Accommodate different field names from local data vs. API
-  const id = business.id || business._id;
-  const name = business.name || business.businessName;
-  const address = business.address || business.businessAddress;
-  const image = business.image || business.profileImage || "https://picsum.photos/seed/placeholder/400/300";
+  const name = business.businessName || business.name;
+  const address = business.businessAddress || business.address;
+  // Use a default placeholder if no image is available
+  const image = "https://picsum.photos/seed/placeholder/400/300";
   const rating = business.rating || 0;
-  const reviewsCount = Array.isArray(business.reviews) ? business.reviews.length : 0;
+  // The new API doesn't seem to provide reviews count directly, so let's default to 0
+  const reviewsCount = 0; 
   
+  const rawPhoneNumber = business.mobileNumber || business.phone;
+  const maskedPhoneNumber = rawPhoneNumber 
+    ? `+91 ${rawPhoneNumber.substring(0, rawPhoneNumber.length - 5)}*****` 
+    : 'Call';
+
+  const businessId = business._id || business.id;
+
   return (
     <Card className="bg-white overflow-hidden transition-shadow duration-300 hover:shadow-xl">
       <CardContent className="p-4 flex flex-col md:flex-row gap-6">
         <div className="relative w-full md:w-48 h-48 md:h-auto flex-shrink-0">
-            <Link href={`/business/${id}`} className="group" prefetch={false}>
+            <Link href={`/business-profile?id=${businessId}`} className="group" prefetch={false}>
               <Image
                 src={image}
                 alt={`Image of ${name}`}
@@ -38,7 +46,7 @@ export function BusinessCard({ business }: BusinessCardProps) {
         </div>
 
         <div className="flex-grow">
-          <Link href={`/business/${id}`} className="group" prefetch={false}>
+          <Link href={`/business-profile?id=${businessId}`} className="group" prefetch={false}>
             {business.category && <Badge variant="secondary" className="mb-2 capitalize">{business.category}</Badge>}
             <h3 className="text-lg font-bold leading-tight group-hover:text-accent truncate">
               {name}
@@ -54,7 +62,7 @@ export function BusinessCard({ business }: BusinessCardProps) {
           <div className="flex items-center gap-2 mt-4">
               <Button className="bg-green-600 hover:bg-green-700 flex-1">
                   <Phone className="mr-2 h-4 w-4" /> 
-                  {business.mobileNumber || business.phone || 'Call'}
+                  {maskedPhoneNumber}
               </Button>
               <Button variant="outline" className="flex-1">
                   <MessageSquare className="mr-2 h-4 w-4"/>

@@ -4,7 +4,7 @@
 import { JustdialHeader } from "@/components/justdial/JustdialHeader";
 import { JustdialFooter } from "@/components/justdial/JustdialFooter";
 import { FloatingButtons } from "@/components/justdial/FloatingButtons";
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
@@ -17,25 +17,45 @@ import { Progress } from '@/components/ui/progress';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { pageTransition } from '@/lib/animations';
-import { Building2, Phone, Clock, CheckCircle2, Sparkles, Loader2, FileText, PlayCircle, Upload } from 'lucide-react';
+import { Building2, Phone, Clock, CheckCircle2, Sparkles, Loader2, FileText, PlayCircle, Upload, MapPin, LocateFixed, User as UserIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import { Textarea } from '@/components/ui/textarea';
 import { Country, State, City } from 'country-state-city';
+import Map, { Marker, MapLayerMouseEvent } from 'react-map-gl';
+import 'maplibre-gl/dist/maplibre-gl.css';
+import maplibregl from 'maplibre-gl';
+import { getVendorStatus } from '@/app/my-business/actions';
 
 const findImage = (id: string) => PlaceHolderImages.find(img => img.id === id)?.imageUrl || '';
 
-const BusinessDetailsStep = ({ data, setData, errors }: { data: Partial<any>, setData: React.Dispatch<React.SetStateAction<Partial<any>>>, errors: any }) => {
+const BusinessDetailsStep = ({ data, setData, errors, viewState, setViewState, userType }: { data: Partial<any>, setData: React.Dispatch<React.SetStateAction<Partial<any>>>, errors: any, viewState: any, setViewState: any, userType: 'individual' | 'vendor' }) => {
     const { toast } = useToast();
     const india = Country.getCountryByCode('IN');
     const states = State.getStatesOfCountry(india?.isoCode);
-    const cities = data.stateCode ? City.getCitiesOfState(india!.isoCode, data.stateCode) : [];
+    const addressPrefix = userType === 'individual' ? 'personal' : 'business';
+
+    const getFieldValue = (fieldName: string) => {
+        return data[`${addressPrefix}${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`] || '';
+    }
+
+    const setFieldValue = (fieldName: string, value: any) => {
+        setData((prev: any) => ({ ...prev, [`${addressPrefix}${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`]: value }));
+    }
+
+    const getError = (fieldName: string) => {
+        return errors?.[`${addressPrefix}${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}`];
+    }
+    
+    const pincode = getFieldValue('pincode');
+    const stateCode = data[`${addressPrefix}StateCode`];
+    const cities = stateCode ? City.getCitiesOfState(india!.isoCode, stateCode) : [];
 
     useEffect(() => {
-        if (data.pincode && data.pincode.length === 6) {
+        if (pincode && pincode.length === 6) {
             const fetchLocationData = async () => {
                 try {
-                    const response = await fetch(`https://api.postalpincode.in/pincode/${data.pincode}`);
+                    const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
                     const result = await response.json();
                     if (result && result[0] && result[0].Status === 'Success') {
                         const postOffice = result[0].PostOffice[0];
@@ -46,43 +66,62 @@ const BusinessDetailsStep = ({ data, setData, errors }: { data: Partial<any>, se
                         if (matchingState) {
                             setData(prev => ({
                                 ...prev,
-                                state: matchingState.name,
-                                stateCode: matchingState.isoCode,
-                                city: cityName,
+                                [`${addressPrefix}State`]: matchingState.name,
+                                [`${addressPrefix}StateCode`]: matchingState.isoCode,
+                                [`${addressPrefix}City`]: cityName,
                             }));
-
-                            // Allow cities to populate
-                            setTimeout(() => {
-                                const matchingCity = City.getCitiesOfState(india!.isoCode, matchingState.isoCode).find(c => c.name === cityName);
-                                if (matchingCity) {
-                                    setData(prev => ({...prev, city: matchingCity.name}));
-                                }
-                            }, 100);
                         }
                     } else {
-                        toast({
-                            title: "Invalid Pincode",
-                            description: "Could not find location for the entered pincode.",
-                            variant: "destructive",
-                        });
+                        toast({ title: "Invalid Pincode", description: "Could not find location for the entered pincode.", variant: "destructive" });
                     }
                 } catch (error) {
-                    console.error("Failed to fetch pincode data", error);
-                    toast({
-                        title: "API Error",
-                        description: "Failed to fetch location data. Please enter manually.",
-                        variant: "destructive",
-                    });
+                    toast({ title: "API Error", description: "Failed to fetch location data.", variant: "destructive" });
                 }
             };
             fetchLocationData();
         }
-    }, [data.pincode, setData, states, india, toast]);
+    }, [pincode, setData, states, india, toast, addressPrefix]);
 
-    const handleStateChange = (stateCode: string) => {
-        const state = states.find(s => s.isoCode === stateCode);
-        setData(prev => ({ ...prev, stateCode, state: state?.name || '', city: '' }));
+    const handleStateChange = (newCode: string) => {
+        const state = states.find(s => s.isoCode === newCode);
+        setData(prev => ({
+            ...prev,
+            [`${addressPrefix}StateCode`]: newCode,
+            [`${addressPrefix}State`]: state?.name || '',
+            [`${addressPrefix}City`]: '',
+        }));
     };
+    
+    const handleMapClick = (e: MapLayerMouseEvent) => {
+        const { lng, lat } = e.lngLat;
+        setData(prev => ({ ...prev, longitude: lng, latitude: lat }));
+    };
+
+    const handleMarkerDrag = (e: any) => {
+        const { lng, lat } = e.lngLat;
+        setData(prev => ({
+            ...prev,
+            longitude: e.lngLat.lng,
+            latitude: e.lngLat.lat,
+        }));
+    };
+    
+    const handleCurrentLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    setData(prev => ({ ...prev, latitude, longitude }));
+                    setViewState(prev => ({ ...prev, latitude, longitude, zoom: 16 }));
+                    toast({ title: "Location Updated", description: "Map centered to your current location." });
+                },
+                () => { toast({ title: "Location Error", description: "Could not retrieve your location.", variant: 'destructive' }); }
+            );
+        } else {
+            toast({ title: "Unsupported", description: "Geolocation is not supported by your browser.", variant: 'destructive' });
+        }
+    };
+
 
     return (
         <motion.div 
@@ -91,66 +130,105 @@ const BusinessDetailsStep = ({ data, setData, errors }: { data: Partial<any>, se
           transition={{ duration: 0.5 }}
           className="space-y-4"
         >
-            <div className="space-y-2">
-                <Label htmlFor="businessName" className="text-gray-700 font-medium">Business Name</Label>
-                <Input id="businessName" name="businessName" placeholder="Enter your business name" className="h-12" value={data.businessName || ''} onChange={(e) => setData(prev => ({...prev, businessName: e.target.value}))} />
-                {errors?.businessName && <p className="text-xs text-red-500">{errors.businessName[0]}</p>}
-            </div>
-            <div className="space-y-2">
-                <Label htmlFor="gstNumber" className="text-gray-700 font-medium">GST Number</Label>
-                <Input id="gstNumber" name="gstNumber" placeholder="Enter your GST number" className="h-12" value={data.gstNumber || ''} onChange={(e) => setData(prev => ({...prev, gstNumber: e.target.value}))} />
-                {errors?.gstNumber && <p className="text-xs text-red-500">{errors.gstNumber[0]}</p>}
-            </div>
+            {userType === 'vendor' && (
+                <>
+                    <div className="space-y-2">
+                        <Label htmlFor="businessName" className="text-gray-700 font-medium">Business Name</Label>
+                        <Input id="businessName" name="businessName" placeholder="Enter your business name" className="h-12" value={data.businessName || ''} onChange={(e) => setData(prev => ({...prev, businessName: e.target.value}))} />
+                        {errors?.businessName && <p className="text-xs text-red-500">{errors.businessName[0]}</p>}
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="gstNumber" className="text-gray-700 font-medium">GST Number</Label>
+                        <Input id="gstNumber" name="gstNumber" placeholder="Enter your GST number" className="h-12" value={data.gstNumber || ''} onChange={(e) => setData(prev => ({...prev, gstNumber: e.target.value}))} />
+                        {errors?.gstNumber && <p className="text-xs text-red-500">{errors.gstNumber[0]}</p>}
+                    </div>
+                </>
+            )}
             
             <div className="space-y-2">
-                <Label htmlFor="plotNo" className="text-gray-700 font-medium">Plot No. / Bldg No. / Wing / Shop No. / Floor</Label>
-                <Input id="plotNo" name="plotNo" placeholder="Enter plot details" className="h-12" value={data.plotNo || ''} onChange={(e) => setData(prev => ({...prev, plotNo: e.target.value}))} />
+                <Label htmlFor={`${addressPrefix}PlotNo`} className="text-gray-700 font-medium">Plot No. / Bldg No. / Wing / Shop No. / Floor</Label>
+                <Input id={`${addressPrefix}PlotNo`} name={`${addressPrefix}PlotNo`} placeholder="Enter plot details" className="h-12" value={getFieldValue('plotNo')} onChange={(e) => setFieldValue('plotNo', e.target.value)} />
             </div>
             <div className="space-y-2">
-                <Label htmlFor="buildingName" className="text-gray-700 font-medium">Building Name / Market / Colony / Society</Label>
-                <Input id="buildingName" name="buildingName" placeholder="Enter building name" className="h-12" value={data.buildingName || ''} onChange={(e) => setData(prev => ({...prev, buildingName: e.target.value}))} />
+                <Label htmlFor={`${addressPrefix}BuildingName`} className="text-gray-700 font-medium">Building Name / Market / Colony / Society</Label>
+                <Input id={`${addressPrefix}BuildingName`} name={`${addressPrefix}BuildingName`} placeholder="Enter building name" className="h-12" value={getFieldValue('buildingName')} onChange={(e) => setFieldValue('buildingName', e.target.value)} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                    <Label htmlFor="street" className="text-gray-700 font-medium">Street / Road Name</Label>
-                    <Input id="street" name="street" placeholder="Enter street name" className="h-12" value={data.street || ''} onChange={(e) => setData(prev => ({...prev, street: e.target.value}))} />
+                    <Label htmlFor={`${addressPrefix}Street`} className="text-gray-700 font-medium">Street / Road Name</Label>
+                    <Input id={`${addressPrefix}Street`} name={`${addressPrefix}Street`} placeholder="Enter street name" className="h-12" value={getFieldValue('street')} onChange={(e) => setFieldValue('street', e.target.value)} />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="landmark" className="text-gray-700 font-medium">Landmark</Label>
-                    <Input id="landmark" name="landmark" placeholder="Enter landmark" className="h-12" value={data.landmark || ''} onChange={(e) => setData(prev => ({...prev, landmark: e.target.value}))} />
+                    <Label htmlFor={`${addressPrefix}Landmark`} className="text-gray-700 font-medium">Landmark</Label>
+                    <Input id={`${addressPrefix}Landmark`} name={`${addressPrefix}Landmark`} placeholder="Enter landmark" className="h-12" value={getFieldValue('landmark')} onChange={(e) => setFieldValue('landmark', e.target.value)} />
                 </div>
             </div>
             <div className="space-y-2">
-                <Label htmlFor="area" className="text-gray-700 font-medium">Area</Label>
-                <Input id="area" name="area" placeholder="Enter Area" className="h-12" value={data.area || ''} onChange={(e) => setData(prev => ({...prev, area: e.target.value}))} />
+                <Label htmlFor={`${addressPrefix}Area`} className="text-gray-700 font-medium">Area</Label>
+                <Input id={`${addressPrefix}Area`} name={`${addressPrefix}Area`} placeholder="Enter Area" className="h-12" value={getFieldValue('area')} onChange={(e) => setFieldValue('area', e.target.value)} />
             </div>
              <div className="space-y-2">
-                <Label htmlFor="pincode" className="text-gray-700 font-medium">Pincode</Label>
-                <Input id="pincode" name="pincode" placeholder="Enter 6-digit pincode" className="h-12" value={data.pincode || ''} onChange={(e) => setData(prev => ({...prev, pincode: e.target.value}))} maxLength={6} />
-                {errors?.pincode && <p className="text-xs text-red-500">{errors.pincode[0]}</p>}
+                <Label htmlFor={`${addressPrefix}Pincode`} className="text-gray-700 font-medium">Pincode</Label>
+                <Input id={`${addressPrefix}Pincode`} name={`${addressPrefix}Pincode`} placeholder="Enter 6-digit pincode" className="h-12" value={pincode} onChange={(e) => setFieldValue('pincode', e.target.value)} maxLength={6} />
+                {getError('pincode') && <p className="text-xs text-red-500">{getError('pincode')[0]}</p>}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                    <Label htmlFor="state">State</Label>
-                    <Select name="state" value={data.stateCode || ""} onValueChange={handleStateChange}>
+                    <Label htmlFor={`${addressPrefix}State`}>State</Label>
+                    <Select name={`${addressPrefix}State`} value={stateCode || ""} onValueChange={handleStateChange}>
                         <SelectTrigger className="h-12"><SelectValue placeholder="Select State" /></SelectTrigger>
                         <SelectContent>
                             {states.map(state => <SelectItem key={state.isoCode} value={state.isoCode}>{state.name}</SelectItem>)}
                         </SelectContent>
                     </Select>
-                    {errors?.state && <p className="text-xs text-red-500">{errors.state[0]}</p>}
+                    {getError('state') && <p className="text-xs text-red-500">{getError('state')[0]}</p>}
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="city">City</Label>
-                     <Select name="city" value={data.city || ""} onValueChange={(value) => setData(prev => ({...prev, city: value}))} disabled={!data.stateCode}>
+                    <Label htmlFor={`${addressPrefix}City`}>City</Label>
+                     <Select name={`${addressPrefix}City`} value={getFieldValue('city')} onValueChange={(value) => setFieldValue('city', value)} disabled={!stateCode}>
                         <SelectTrigger className="h-12"><SelectValue placeholder="Select City" /></SelectTrigger>
                         <SelectContent>
                             {cities.map(city => <SelectItem key={city.name} value={city.name}>{city.name}</SelectItem>)}
                         </SelectContent>
                     </Select>
-                    {errors?.city && <p className="text-xs text-red-500">{errors.city[0]}</p>}
+                    {getError('city') && <p className="text-xs text-red-500">{getError('city')[0]}</p>}
                 </div>
             </div>
+
+            <div className="space-y-4 pt-4">
+                <div className="flex items-center gap-2">
+                    <Label className="flex items-center gap-2"><MapPin className="h-5 w-5 text-primary" /> Set Location on Map</Label>
+                    <Button type="button" variant="outline" size="sm" onClick={handleCurrentLocation}>
+                        <LocateFixed className="h-4 w-4 mr-2" />
+                        Use Current Location
+                    </Button>
+                </div>
+                <Card className="h-96 w-full relative rounded-2xl overflow-hidden border-2 border-primary/10 shadow-lg bg-gray-100">
+                    <Map
+                        {...viewState}
+                        onMove={evt => setViewState(evt.viewState)}
+                        onClick={handleMapClick}
+                        mapLib={maplibregl}
+                        style={{width: '100%', height: '100%'}}
+                        mapStyle={`https://api.maptiler.com/maps/streets/style.json?key=${process.env.NEXT_PUBLIC_MAPTILER_KEY}`}
+                    >
+                        {data.latitude && data.longitude && (
+                            <Marker 
+                                longitude={data.longitude!} 
+                                latitude={data.latitude!} 
+                                anchor="bottom"
+                                draggable
+                                onDragEnd={handleMarkerDrag}
+                            >
+                                <div className="text-red-500">
+                                    <MapPin size={40} strokeWidth={1.5} />
+                                </div>
+                            </Marker>
+                        )}
+                    </Map>
+                </Card>
+            </div>
+
         </motion.div>
     );
 };
@@ -176,8 +254,8 @@ const ContactDetailsStep = ({ data, setData, errors }: { data: Partial<any>, set
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="contactPersonName" className="text-gray-700 font-medium">Contact Person</Label>
-                    <Input id="contactPersonName" name="contactPerson" placeholder="Enter name" className="h-12" value={data.contactPersonName || ''} onChange={(e) => setData(prev => ({...prev, contactPersonName: e.target.value}))} />
-                    {errors?.contactPerson && <p className="text-xs text-red-500">{errors.contactPerson[0]}</p>}
+                    <Input id="contactPersonName" name="contactPersonName" placeholder="Enter name" className="h-12" value={data.contactPersonName || ''} onChange={(e) => setData(prev => ({...prev, contactPersonName: e.target.value}))} />
+                    {errors?.contactPersonName && <p className="text-xs text-red-500">{errors.contactPersonName[0]}</p>}
                 </div>
             </div>
             <div className="space-y-2">
@@ -186,9 +264,9 @@ const ContactDetailsStep = ({ data, setData, errors }: { data: Partial<any>, set
                     <div className="flex h-12 w-24 items-center justify-center rounded-md border border-input bg-background px-3 py-2 text-sm">
                         +91
                     </div>
-                    <Input id="primaryMobileNumber" name="mobileNumber" type="tel" placeholder="Enter mobile number" className="h-12 flex-1" value={data.primaryMobileNumber || ''} onChange={(e) => setData(prev => ({...prev, primaryMobileNumber: e.target.value}))} />
+                    <Input id="primaryMobileNumber" name="primaryMobileNumber" type="tel" placeholder="Enter mobile number" className="h-12 flex-1" value={data.primaryMobileNumber || ''} onChange={(e) => setData(prev => ({...prev, primaryMobileNumber: e.target.value}))} />
                 </div>
-                 {errors?.mobileNumber && <p className="text-xs text-red-500">{errors.mobileNumber[0]}</p>}
+                 {errors?.primaryMobileNumber && <p className="text-xs text-red-500">{errors.primaryMobileNumber[0]}</p>}
             </div>
             <div className="space-y-2">
                 <Label htmlFor="whatsappNumber" className="text-gray-700 font-medium">WhatsApp Number</Label>
@@ -271,13 +349,13 @@ const BusinessTimingsStep = ({ data, setData, errors }: { data: Partial<any>, se
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                         <Label htmlFor="openTime" className="text-gray-700 font-medium">Open At</Label>
-                        <Input id="openTime" name="businessHoursOpen" type="time" className="h-12" value={data.openTime || ''} onChange={(e) => setData(prev => ({...prev, openTime: e.target.value}))}/>
-                        {errors?.businessHoursOpen && <p className="text-xs text-red-500">{errors.businessHoursOpen[0]}</p>}
+                        <Input id="openTime" name="openTime" type="time" className="h-12" value={data.openTime || ''} onChange={(e) => setData(prev => ({...prev, openTime: e.target.value}))}/>
+                        {errors?.openTime && <p className="text-xs text-red-500">{errors.openTime[0]}</p>}
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="closingTime" className="text-gray-700 font-medium">Close At</Label>
-                        <Input id="closingTime" name="businessHoursClose" type="time" className="h-12" value={data.closingTime || ''} onChange={(e) => setData(prev => ({...prev, closingTime: e.target.value}))}/>
-                        {errors?.businessHoursClose && <p className="text-xs text-red-500">{errors.businessHoursClose[0]}</p>}
+                        <Input id="closingTime" name="closingTime" type="time" className="h-12" value={data.closingTime || ''} onChange={(e) => setData(prev => ({...prev, closingTime: e.target.value}))}/>
+                        {errors?.closingTime && <p className="text-xs text-red-500">{errors.closingTime[0]}</p>}
                     </div>
                 </div>
             </div>
@@ -333,8 +411,9 @@ const KycStep = ({ data, setData, errors }: { data: Partial<any>, setData: React
 
 
 export default function FreeListingPage() {
+  const [userType, setUserType] = useState<'individual' | 'vendor' | null>(null);
+  const [isExistingVendor, setIsExistingVendor] = useState<boolean | null>(null); // null is loading state
   const [step, setStep] = useState(1);
-  const totalSteps = 4;
   
   const [user, setUser] = useState<any>(null);
   
@@ -343,53 +422,87 @@ export default function FreeListingPage() {
     workingDays: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
     openTime: '09:00',
     closingTime: '18:00',
+    latitude: 19.0760,
+    longitude: 72.8777,
   });
+
+   const [viewState, setViewState] = useState({
+    latitude: 19.0760,
+    longitude: 72.8777,
+    zoom: 12,
+  });
+
+
   const [isPending, setIsPending] = useState(false);
   const [clientErrors, setClientErrors] = useState<any>(null);
   const formRef = useRef<HTMLFormElement>(null);
   
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const userData = localStorage.getItem('user');
-      if (userData) {
-        const parsedUser = JSON.parse(userData);
-        setUser(parsedUser);
-        setFormDataState(prev => ({
-          ...prev,
-          userId: parsedUser.id,
-          contactPersonName: parsedUser.name || '',
-          primaryMobileNumber: parsedUser.phone || '',
-          email: parsedUser.email || ''
-        }));
-      }
-    }
-  }, []);
-
-  const { toast } = useToast();
   const router = useRouter();
+  const { toast } = useToast();
+
+   useEffect(() => {
+    const checkUserStatus = async () => {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            router.push('/login');
+            return;
+        }
+
+        const userData = localStorage.getItem('user');
+        if (userData) {
+            const parsedUser = JSON.parse(userData);
+            setUser(parsedUser);
+            setFormDataState(prev => ({
+                ...prev,
+                userId: parsedUser.id,
+                contactPersonName: parsedUser.name || '',
+                primaryMobileNumber: parsedUser.phone || '',
+                email: parsedUser.email || ''
+            }));
+        }
+
+        const { isVendor, error } = await getVendorStatus(token);
+        if (error) {
+            toast({ title: "Error", description: "Could not verify your status.", variant: "destructive"});
+            // Fallback to showing choice if status check fails
+            setIsExistingVendor(false);
+        } else {
+            setIsExistingVendor(isVendor);
+            if (isVendor) {
+                setUserType('vendor');
+            }
+        }
+    };
+    checkUserStatus();
+  }, [router, toast]);
+
+  const totalSteps = userType === 'individual' ? 4 : 4;
 
   const validateStep = (currentStep: number) => {
     let errors: any = {};
     let isValid = true;
+    const addressPrefix = userType === 'individual' ? 'personal' : 'business';
 
     if (currentStep === 1) {
-      if (!formDataState.businessName) { errors.businessName = ["Business Name is required."]; isValid = false; }
-      if (!formDataState.gstNumber) { errors.gstNumber = ["GST Number is required."]; isValid = false; }
-      if (!formDataState.pincode) { errors.pincode = ["Pincode is required."]; isValid = false; }
-      if (!formDataState.city) { errors.city = ["City is required."]; isValid = false; }
-      if (!formDataState.state) { errors.state = ["State is required."]; isValid = false; }
+        if (userType === 'vendor') {
+            if (!formDataState.businessName) { errors.businessName = ["Business Name is required."]; isValid = false; }
+            if (!formDataState.gstNumber) { errors.gstNumber = ["GST Number is required."]; isValid = false; }
+        }
+        if (!formDataState[`${addressPrefix}Pincode`]) { errors[`${addressPrefix}Pincode`] = ["Pincode is required."]; isValid = false; }
+        if (!formDataState[`${addressPrefix}City`]) { errors[`${addressPrefix}City`] = ["City is required."]; isValid = false; }
+        if (!formDataState[`${addressPrefix}State`]) { errors[`${addressPrefix}State`] = ["State is required."]; isValid = false; }
     } else if (currentStep === 2) {
-      if (!formDataState.contactPersonName) { errors.contactPerson = ["Contact Person is required."]; isValid = false; }
-      if (!formDataState.primaryMobileNumber) { errors.mobileNumber = ["Mobile Number is required."]; isValid = false; }
-      else if (!/^\d{10}$/.test(formDataState.primaryMobileNumber)) { errors.mobileNumber = ["Mobile Number must be 10 digits."]; isValid = false; }
+      if (!formDataState.contactPersonName) { errors.contactPersonName = ["Contact Person is required."]; isValid = false; }
+      if (!formDataState.primaryMobileNumber) { errors.primaryMobileNumber = ["Mobile Number is required."]; isValid = false; }
+      else if (!/^\d{10}$/.test(formDataState.primaryMobileNumber)) { errors.primaryMobileNumber = ["Mobile Number must be 10 digits."]; isValid = false; }
       if (!formDataState.email) { errors.email = ["Email is required."]; isValid = false; }
       else if (!/\S+@\S+\.\S+/.test(formDataState.email)) { errors.email = ["Invalid email format."]; isValid = false; }
     } else if (currentStep === 3) {
       if (!formDataState.workingDays || formDataState.workingDays.length === 0) { errors.workingDays = ["Please select at least one working day."]; isValid = false; }
-      if (!formDataState.openTime) { errors.businessHoursOpen = ["Open Time is required."]; isValid = false; }
-      if (!formDataState.closingTime) { errors.businessHoursClose = ["Closing Time is required."]; isValid = false; }
+      if (!formDataState.openTime) { errors.openTime = ["Open Time is required."]; isValid = false; }
+      if (!formDataState.closingTime) { errors.closingTime = ["Closing Time is required."]; isValid = false; }
       if (formDataState.openTime && formDataState.closingTime && formDataState.openTime >= formDataState.closingTime) {
-        errors.businessHoursClose = ["Closing Time must be after Open Time."]; isValid = false;
+        errors.closingTime = ["Closing Time must be after Open Time."]; isValid = false;
       }
     } else if (currentStep === 4) {
       if (!formDataState.aadharNumber) { errors.aadharNumber = ["Aadhar Number is required."]; isValid = false; }
@@ -416,11 +529,12 @@ export default function FreeListingPage() {
               description: "Please fill in all required fields correctly across all steps before submitting.",
               variant: "destructive"
           });
-          // Optionally, navigate to the first step with an error
-          if (!validateStep(1)) setStep(1);
-          else if (!validateStep(2)) setStep(2);
-          else if (!validateStep(3)) setStep(3);
-          else if (!validateStep(4)) setStep(4);
+          for (let i = 1; i <= totalSteps; i++) {
+              if (!validateStep(i)) {
+                  setStep(i);
+                  break;
+              }
+          }
           return;
       }
       
@@ -430,54 +544,23 @@ export default function FreeListingPage() {
       const token = localStorage.getItem('accessToken');
       
       if (!token) {
-          toast({
-              title: "Authentication Error",
-              description: "You must be logged in to create a listing.",
-              variant: "destructive"
-          });
+          toast({ title: "Authentication Error", description: "You must be logged in.", variant: "destructive" });
           setIsPending(false);
+          router.push('/login');
           return;
       }
   
-      const formData = new FormData();
-      
-      // Append all fields from the state, mapping to correct API keys
-      const keyMap: { [key: string]: string } = {
-          contactPersonName: 'contactPerson',
-          primaryMobileNumber: 'mobileNumber',
-          contactPersonTitle: 'title',
-          openTime: 'businessHoursOpen',
-          closingTime: 'businessHoursClose',
-      };
+      const formData = new FormData(formRef.current!);
+      formData.append('userType', userType!);
+      formData.append('workingDays', JSON.stringify(formDataState.workingDays));
+      formData.append('latitude', formDataState.latitude?.toString() || '');
+      formData.append('longitude', formDataState.longitude?.toString() || '');
 
-      Object.keys(formDataState).forEach(key => {
-          const value = formDataState[key];
-          const mappedKey = keyMap[key] || key;
-
-          if (key === 'workingDays' && Array.isArray(value)) {
-              formData.append(mappedKey, JSON.stringify(value));
-          } else if (value !== undefined && value !== null) {
-              formData.append(mappedKey, value);
-          }
-      });
-      
-      // Append files from the form element
-      const aadharImageInput = formRef.current?.querySelector<HTMLInputElement>('input[name="aadharImage"]');
-      if (aadharImageInput?.files?.[0]) {
-          formData.append('aadharImage', aadharImageInput.files[0]);
-      }
-      
-      const videoKycInput = formRef.current?.querySelector<HTMLInputElement>('input[name="videoKyc"]');
-      if (videoKycInput?.files?.[0]) {
-          formData.append('videoKyc', videoKycInput.files[0]);
-      }
   
       try {
           const response = await fetch(`${apiBaseUrl}/api/kyc/submit`, {
               method: 'POST',
-              headers: {
-                  'Authorization': `Bearer ${token}`,
-              },
+              headers: { 'Authorization': `Bearer ${token}` },
               body: formData,
           });
   
@@ -487,16 +570,12 @@ export default function FreeListingPage() {
               throw new Error(result.message || 'Failed to submit business listing.');
           }
   
-          toast({ title: "Success!", description: "Business listing submitted successfully! It is now pending for KYC approval." });
+          toast({ title: "Success!", description: "Listing submitted successfully! Pending KYC approval." });
           router.push('/my-business');
   
       } catch (error) {
           const errorMessage = (error as Error).message;
-          toast({
-              title: "Submission Failed",
-              description: errorMessage,
-              variant: "destructive"
-          });
+          toast({ title: "Submission Failed", description: errorMessage, variant: "destructive" });
           setClientErrors({ server: [errorMessage] });
       } finally {
           setIsPending(false);
@@ -530,14 +609,75 @@ export default function FreeListingPage() {
   ];
   
   const stepTitles = [
-    'Enter Your Business Details',
+    userType === 'vendor' ? 'Enter Your Business Details' : 'Enter Your Personal Address',
     'Enter Your Contact Details',
-    'Set Your Business Timings',
-    'Complete Your KYC'
+    'Set Your Working Hours',
+    'Complete Your KYC',
+  ];
+  
+  const stepIcons = [
+    userType === 'vendor' ? Building2 : MapPin,
+    Phone,
+    Clock,
+    FileText,
   ];
 
-  const stepIcons = [Building2, Phone, Clock, FileText];
-  const StepIcon = stepIcons[step - 1];
+  const StepIcon = userType ? stepIcons[step - 1] : Sparkles;
+
+  if (isExistingVendor === null) {
+      return (
+        <div className="flex h-screen items-center justify-center">
+            <Loader2 className="h-12 w-12 animate-spin text-primary"/>
+        </div>
+      )
+  }
+
+  if (!userType) {
+    return (
+        <motion.div
+            initial="initial" animate="animate" exit="exit" variants={pageTransition}
+            className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50"
+        >
+            <JustdialHeader />
+            <FloatingButtons />
+            <main className="flex-grow flex items-center justify-center container mx-auto px-4 py-12">
+                <Card className="w-full max-w-4xl p-8 text-center shadow-2xl">
+                    <CardHeader>
+                        <CardTitle className="text-3xl font-bold mb-2">Choose Your Listing Type</CardTitle>
+                        <CardDescription className="text-gray-600 mb-8 text-lg">
+                            How would you like to be represented on our platform?
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="grid md:grid-cols-2 gap-8">
+                        <motion.div
+                            whileHover={{ scale: 1.05, y: -5 }}
+                            className="p-6 border-2 rounded-2xl cursor-pointer hover:border-primary hover:shadow-xl transition-all"
+                            onClick={() => setUserType('individual')}
+                        >
+                            <UserIcon className="h-12 w-12 mx-auto text-primary mb-4" />
+                            <h3 className="text-xl font-bold mb-2">Individual</h3>
+                            <p className="text-gray-500 text-sm">
+                                Best for freelancers, professionals, or any individual (e.g., staff member) offering a service.
+                            </p>
+                        </motion.div>
+                         <motion.div
+                            whileHover={{ scale: 1.05, y: -5 }}
+                            className="p-6 border-2 rounded-2xl cursor-pointer hover:border-accent hover:shadow-xl transition-all"
+                            onClick={() => setUserType('vendor')}
+                        >
+                            <Building2 className="h-12 w-12 mx-auto text-accent mb-4" />
+                            <h3 className="text-xl font-bold mb-2">Business / Vendor</h3>
+                            <p className="text-gray-500 text-sm">
+                                Ideal for registered businesses with a physical location, managing employee records, and company-level operations.
+                            </p>
+                        </motion.div>
+                    </CardContent>
+                </Card>
+            </main>
+            <JustdialFooter />
+        </motion.div>
+    )
+  }
 
   return (
     <motion.div
@@ -551,171 +691,81 @@ export default function FreeListingPage() {
       <FloatingButtons />
 
       <section className="relative bg-gradient-to-br from-primary/5 via-accent/5 to-background pt-28 pb-12 overflow-hidden">
-        <motion.div
-          className="absolute top-20 left-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl"
-          animate={{ scale: [1, 1.2, 1], x: [0, 50, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl"
-          animate={{ scale: [1.2, 1, 1.2], x: [0, -50, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
-
+        <motion.div className="absolute top-20 left-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl" animate={{ scale: [1, 1.2, 1], x: [0, 50, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} />
+        <motion.div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl" animate={{ scale: [1.2, 1, 1.2], x: [0, -50, 0] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} />
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border border-primary/20"
-            >
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-center max-w-3xl mx-auto">
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }} className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border border-primary/20">
               <Sparkles className="h-4 w-4 text-primary animate-pulse" />
               <span className="text-sm font-medium text-gray-700">100% Free - No Hidden Charges</span>
             </motion.div>
-
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
-              <motion.span
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary"
-              >
+              <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent to-primary">
                 Add Your Business
               </motion.span>
             </h1>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg text-gray-600"
-            >
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="text-lg text-gray-600">
               Join 4.9 Crore+ businesses and grow your reach today
             </motion.p>
           </motion.div>
         </div>
-
         <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
-          <svg
-            className="relative block w-full h-12"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1200 120"
-            preserveAspectRatio="none"
-          >
-            <motion.path
-              d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-              fill="#ffffff"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 2, ease: "easeInOut" }}
-            />
+          <svg className="relative block w-full h-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <motion.path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#ffffff" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 2, ease: "easeInOut" }} />
           </svg>
         </div>
       </section>
 
       <main className="flex-grow container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
-           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-12 max-w-lg mx-auto"
-          >
+           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-12 max-w-lg mx-auto">
             <div className="flex items-center justify-center mb-4">
-              {[1, 2, 3, 4].map((num) => (
-                <div key={num} className="flex items-center flex-1 last:flex-none">
-                  <motion.div
-                    className={`w-12 h-12 rounded-full flex items-center justify-center font-bold transition-all ${
-                      step >= num
-                        ? 'bg-gradient-to-r from-primary to-accent text-white shadow-lg'
-                        : 'bg-gray-200 text-gray-500'
-                    }`}
-                    whileHover={{ scale: 1.1 }}
-                    animate={step === num ? { scale: [1, 1.1, 1] } : {}}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {step > num ? <CheckCircle2 className="h-6 w-6" /> : num}
-                  </motion.div>
-                  {num < 4 && (
-                    <div className={`flex-1 h-1 mx-2 rounded ${
-                      step > num ? 'bg-gradient-to-r from-primary to-accent' : 'bg-gray-200'
-                    }`} />
-                  )}
-                </div>
-              ))}
+              {[...Array(totalSteps)].map((_, i) => {
+                const num = i + 1;
+                return (
+                  <div key={num} className="flex items-center flex-1 last:flex-none">
+                    <motion.div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold transition-all ${ step >= num ? 'bg-gradient-to-r from-primary to-accent text-white shadow-lg' : 'bg-gray-200 text-gray-500' }`} whileHover={{ scale: 1.1 }} animate={step === num ? { scale: [1, 1.1, 1] } : {}} transition={{ duration: 0.5 }}>
+                      {step > num ? <CheckCircle2 className="h-6 w-6" /> : num}
+                    </motion.div>
+                    {num < totalSteps && ( <div className={`flex-1 h-1 mx-2 rounded ${ step > num ? 'bg-gradient-to-r from-primary to-accent' : 'bg-gray-200' }`} /> )}
+                  </div>
+                )
+              })}
             </div>
             <Progress value={(step / totalSteps) * 100} className="h-2" />
             <p className="text-center text-sm text-gray-500 mt-3">Step {step} of {totalSteps}</p>
           </motion.div>
              <form ref={formRef} onSubmit={handleSubmit}>
                 {user?.id && <input type="hidden" name="userId" value={user.id} />}
+                <input type="hidden" name="userType" value={userType} />
                 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                    <motion.div 
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="hidden lg:flex flex-col items-center justify-center sticky top-24"
-                    >
-                    <Card className="p-8 bg-gradient-to-br from-primary/5 via-white to-accent/5 border-0 shadow-2xl hover-lift">
-                        <motion.div
-                        className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg"
-                        whileHover={{ rotate: 360, scale: 1.1 }}
-                        transition={{ duration: 0.6 }}
-                        >
-                        <StepIcon className="h-10 w-10 text-white" />
+                    <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="hidden lg:flex flex-col items-center justify-center sticky top-24">
+                      <Card className="p-8 bg-gradient-to-br from-primary/5 via-white to-accent/5 border-0 shadow-2xl hover-lift">
+                        <motion.div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg" whileHover={{ rotate: 360, scale: 1.1 }} transition={{ duration: 0.6 }}>
+                          <StepIcon className="h-10 w-10 text-white" />
                         </motion.div>
-                        <Image 
-                        src={findImage(stepImages[step-1])!} 
-                        alt="Business Listing Illustration"
-                        width={400}
-                        height={400}
-                        className="mb-6 rounded-xl"
-                        data-ai-hint="business form illustration"
-                        />
+                        <Image src={findImage(stepImages[step-1])!} alt="Business Listing Illustration" width={400} height={400} className="mb-6 rounded-xl" data-ai-hint="business form illustration" />
                         <div className="space-y-3">
-                        <div className="flex items-start gap-3">
-                            <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><span className="text-green-600 text-xs">✓</span></div>
-                            <p className="text-sm text-gray-600">Reach 4.9 Crore+ customers instantly</p>
+                          <div className="flex items-start gap-3"><div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><span className="text-green-600 text-xs">✓</span></div><p className="text-sm text-gray-600">Reach 4.9 Crore+ customers instantly</p></div>
+                          <div className="flex items-start gap-3"><div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><span className="text-green-600 text-xs">✓</span></div><p className="text-sm text-gray-600">Get verified business badge</p></div>
+                          <div className="flex items-start gap-3"><div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><span className="text-green-600 text-xs">✓</span></div><p className="text-sm text-gray-600">24/7 customer support</p></div>
                         </div>
-                        <div className="flex items-start gap-3">
-                            <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><span className="text-green-600 text-xs">✓</span></div>
-                            <p className="text-sm text-gray-600">Get verified business badge</p>
-                        </div>
-                        <div className="flex items-start gap-3">
-                            <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5"><span className="text-green-600 text-xs">✓</span></div>
-                            <p className="text-sm text-gray-600">24/7 customer support</p>
-                        </div>
-                        </div>
-                    </Card>
+                      </Card>
                     </motion.div>
 
-                    <motion.div
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8 }}
-                    >
+                    <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
                     <Card className="shadow-xl border-0 hover-lift">
                         <CardContent className="p-8">
                         <div className="flex items-center gap-3 mb-6">
-                            <motion.div
-                            className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center"
-                            whileHover={{ rotate: 360 }}
-                            transition={{ duration: 0.6 }}
-                            >
-                            <StepIcon className="h-6 w-6 text-white" />
+                            <motion.div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center" whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }}>
+                              <StepIcon className="h-6 w-6 text-white" />
                             </motion.div>
                             <h2 className="text-2xl font-bold text-gray-900">{stepTitles[step-1]}</h2>
                         </div>
                         
                         <div style={{ display: step === 1 ? 'block' : 'none' }}>
-                            <BusinessDetailsStep data={formDataState} setData={setFormDataState} errors={clientErrors} />
+                            <BusinessDetailsStep data={formDataState} setData={setFormDataState} errors={clientErrors} viewState={viewState} setViewState={setViewState} userType={userType!} />
                         </div>
                         <div style={{ display: step === 2 ? 'block' : 'none' }}>
                             <ContactDetailsStep data={formDataState} setData={setFormDataState} errors={clientErrors} />
@@ -727,39 +777,16 @@ export default function FreeListingPage() {
                             <KycStep data={formDataState} setData={setFormDataState} errors={clientErrors} />
                         </div>
                         
-                        {clientErrors?.server && (
-                            <div className="mt-4 p-3 bg-red-100 border border-red-200 text-red-700 rounded-md text-sm">
-                                {clientErrors.server[0]}
-                            </div>
-                        )}
-
+                        {clientErrors?.server && ( <div className="mt-4 p-3 bg-red-100 border border-red-200 text-red-700 rounded-md text-sm"> {clientErrors.server[0]} </div> )}
 
                         <div className="flex justify-between mt-8 gap-4">
-                            <Button 
-                                type="button"
-                                variant="outline" 
-                                onClick={prevStep}
-                                className={`h-12 px-8 border-2 ${step === 1 ? 'invisible' : ''}`}
-                            >
-                                Previous
-                            </Button>
+                            <Button type="button" variant="outline" onClick={prevStep} className={`h-12 px-8 border-2 ${step === 1 ? 'invisible' : ''}`} > Previous </Button>
                            
                             {step < totalSteps ? (
-                              <Button 
-                                type="button"
-                                onClick={handleNextStep} 
-                                className="h-12 px-8 bg-gradient-to-r from-primary to-accent hover:shadow-2xl transition-all duration-300"
-                              >
-                                Next Step →
-                              </Button>
+                              <Button type="button" onClick={handleNextStep} className="h-12 px-8 bg-gradient-to-r from-primary to-accent hover:shadow-2xl transition-all duration-300"> Next Step → </Button>
                             ) : (
-                              <Button 
-                                type="submit"
-                                disabled={isPending || !formDataState.aadharNumber || String(formDataState.aadharNumber).length !== 12}
-                                className="h-12 px-8 bg-gradient-to-r from-green-600 to-teal-600 hover:shadow-2xl transition-all duration-300"
-                              >
-                                {isPending ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <CheckCircle2 className="h-5 w-5 mr-2" />}
-                                Submit Listing
+                              <Button type="submit" disabled={isPending || !formDataState.aadharNumber} className="h-12 px-8 bg-gradient-to-r from-green-600 to-teal-600 hover:shadow-2xl transition-all duration-300">
+                                {isPending ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <CheckCircle2 className="h-5 w-5 mr-2" />} Submit Listing
                               </Button>
                             )}
                         </div>
@@ -774,3 +801,4 @@ export default function FreeListingPage() {
     </motion.div>
   );
 }
+

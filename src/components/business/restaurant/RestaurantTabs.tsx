@@ -41,14 +41,14 @@ const faqs = [
 
 export function RestaurantTabs({ business }: { business: Business }) {
   return (
-    <Tabs defaultValue="about" className="w-full">
+    <Tabs defaultValue="overview" className="w-full">
       <TabsList>
-        <TabsTrigger value="about">About</TabsTrigger>
-        <TabsTrigger value="menu">Menu</TabsTrigger>
+        <TabsTrigger value="overview">Overview</TabsTrigger>
+        <TabsTrigger value="services">Services</TabsTrigger>
         <TabsTrigger value="photos">Photos</TabsTrigger>
         <TabsTrigger value="reviews">Reviews</TabsTrigger>
       </TabsList>
-      <TabsContent value="about">
+      <TabsContent value="overview">
         <Card>
             <CardHeader><CardTitle className="text-lg">About {business.name}</CardTitle></CardHeader>
             <CardContent>
@@ -81,7 +81,7 @@ export function RestaurantTabs({ business }: { business: Business }) {
             </CardContent>
         </Card>
       </TabsContent>
-      <TabsContent value="menu">
+      <TabsContent value="services">
          <Card>
             <CardHeader>
                 <CardTitle className="text-lg">Menu</CardTitle>

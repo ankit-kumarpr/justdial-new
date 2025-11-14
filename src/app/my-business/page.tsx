@@ -15,7 +15,7 @@ import { pageTransition, staggerContainer, fadeInUp } from '@/lib/animations';
 import { Badge } from '@/components/ui/badge';
 import { useState, useEffect, useCallback } from 'react';
 import { Progress } from "@/components/ui/progress";
-import { getVendorsForUser } from './actions';
+import { getVendorsForUser, getVendorStatus } from './actions';
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 
@@ -31,14 +31,13 @@ type Vendor = {
 };
 
 export default function MyBusinessPage() {
-    const [user, setUser] = useState<any>(null);
     const [vendors, setVendors] = useState<Vendor[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
     const { toast } = useToast();
 
-    const fetchVendors = useCallback(async () => {
+    const fetchAndRoute = useCallback(async () => {
         setLoading(true);
         setError(null);
         const token = localStorage.getItem('accessToken');
@@ -47,31 +46,32 @@ export default function MyBusinessPage() {
             return;
         }
 
-        const { data, error } = await getVendorsForUser(token);
+        const { businessCount, singleBusinessId, error: statusError } = await getVendorStatus(token);
 
-        if (error) {
-            console.error('Error fetching vendors:', error);
-            setError(error);
-            if (error.toLowerCase().includes('token')) {
-                toast({
-                    title: "Session Expired",
-                    description: "Please log in again to view your businesses.",
-                    variant: "destructive",
-                });
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('refreshToken');
-                localStorage.removeItem('user');
-                window.dispatchEvent(new Event("storage"));
+        if (statusError) {
+             toast({ title: "Error", description: "Could not verify your business status.", variant: "destructive" });
+             setError(statusError);
+             setLoading(false);
+             return;
+        }
+
+        if (businessCount === 1 && singleBusinessId) {
+            router.replace(`/business-dashboard?id=${singleBusinessId}`);
+            return; // Redirect and skip fetching the list
+        }
+
+        const { data, error: fetchError } = await getVendorsForUser(token);
+
+        if (fetchError) {
+            setError(fetchError);
+            if (fetchError.toLowerCase().includes('token')) {
+                toast({ title: "Session Expired", description: "Please log in again.", variant: "destructive" });
                 router.push('/login');
             } else {
-                toast({
-                    title: "Error",
-                    description: "Could not load your businesses. Please try again.",
-                    variant: "destructive",
-                });
+                toast({ title: "Error", description: "Could not load your businesses.", variant: "destructive" });
             }
         } else {
-            setVendors(data as Vendor[]);
+            setVendors(data || []);
         }
         setLoading(false);
     }, [router, toast]);
@@ -79,13 +79,11 @@ export default function MyBusinessPage() {
     useEffect(() => {
         const userData = localStorage.getItem('user');
         if (userData) {
-            setUser(JSON.parse(userData));
-            fetchVendors();
+            fetchAndRoute();
         } else {
-            // If no user data, they shouldn't be here.
             router.push('/login');
         }
-    }, [fetchVendors, router]);
+    }, [fetchAndRoute, router]);
     
     return (
         <motion.div

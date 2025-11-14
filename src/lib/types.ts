@@ -1,12 +1,48 @@
 
+
 import type { LucideIcon } from 'lucide-react';
 
 export type Review = {
   id: string;
-  author: string;
+  vendor: {
+    _id: string;
+    name: string;
+  };
+  user: {
+    _id: string;
+  };
   rating: number;
   comment: string;
-  date: string;
+  status: 'pending' | 'approved' | 'rejected';
+  createdAt: string;
+  [key: string]: any;
+};
+
+export type AdminReview = {
+  id: string;
+  vendor: {
+    _id: string;
+    name: string;
+    email: string;
+    phone: string;
+    role: string;
+  };
+  user: {
+    _id: string;
+    name: string;
+    email: string;
+    phone: string;
+    role: string;
+  };
+  rating: number;
+  comment: string;
+  status: 'pending' | 'approved' | 'rejected';
+  approvedBy?: any;
+  approvedAt?: string;
+  rejectedBy?: any;
+  createdAt: string;
+  updatedAt: string;
+  editedAt?: string;
 };
 
 export type User = {
@@ -20,6 +56,39 @@ export type User = {
   updatedAt: string;
   [key: string]: any; 
 };
+export type Service = {
+  _id: string;
+  serviceName: string;
+  serviceImage: string | null;
+  priceType: 'single' | 'range' | 'quantity';
+  actualPrice: number | null;
+  discountPrice: number | null;
+  minPrice: number | null;
+  maxPrice: number | null;
+  unit: string | null;
+  quantityPricing: Array<{ quantity: number; price: number }>;
+  description: string;
+  attachments: string[];
+  createdAt: string;
+  updatedAt: string;
+};
+export type BusinessPhoto = {
+  path: string;
+  url: string;
+};
+
+export type BusinessVideo = {
+  path: string;
+  url: string;
+};
+
+export type SocialMediaLinks = {
+  facebook?: string;
+  instagram?: string;
+  twitter?: string;
+  linkedin?: string;
+  youtube?: string;
+};
 
 export type Business = {
   _id?: string; 
@@ -31,6 +100,9 @@ export type Business = {
   address?: string; 
   businessAddress?: string; 
   phone?: string;
+  mobileNumber?: string;
+  email?: string;
+  gstNumber?: string;
   website?: string;
   rating?: number;
   reviews?: Review[];
@@ -39,6 +111,26 @@ export type Business = {
   gallery?: string[];
   cuisines?: string[];
   city?: string;
+  state?: string;
+  pincode?: string;
+  location?: {
+    type: string;
+    coordinates: [number, number];
+  };
+  vendor?: {
+    _id: string;
+    name: string;
+    email: string;
+    phone: string;
+  };
+  matchedKeywords?: string[];
+  distance?: number;
+  distanceKm?: string;
+  services?: Service[];
+  totalServices?: number;
+  businessPhotos?: BusinessPhoto[];
+  businessVideo?: BusinessVideo;
+  socialMediaLinks?: SocialMediaLinks;
   [key: string]: any; 
 };
 
@@ -78,6 +170,13 @@ export type Banner = {
   vendor?: {
     businessName: string;
   }
+  discount?: number | string;
+  description?: string;
+  isPaid?: boolean;
+  isBannerUploaded?: boolean;
+  duration?: number;
+  price?: number;
+  paymentOrderId?: string;
 };
 
 export type OfferBannerPrice = {
@@ -317,9 +416,11 @@ export type KycSubmission = {
     pincode?: string;
     state?: string;
     city?: string;
+    address?: string;
+    contactPersonTitle?: string;
+    workingDays?: string[];
     businessHoursOpen?: string;
     businessHoursClose?: string;
-    workingDays?: string[];
     aadharNumber?: string;
     aadharImage?: string | null;
     videoKyc?: string | null;
@@ -329,11 +430,50 @@ export type KycSubmission = {
     updatedAt: string;
   };
 
+export type VendorResponse = {
+  _id: string;
+  leadId: string;
+  vendorId: {
+    _id: string;
+    name: string;
+    email: string;
+  };
+  businessId: {
+    _id: string;
+    businessName: string;
+    city: string;
+    state: string;
+  }
+  status: 'pending' | 'accepted' | 'rejected';
+  distance: number;
+}
+
+export type Lead = {
+    _id: string;
+    searchKeyword: string;
+    description: string;
+    status: 'pending' | 'in-progress' | 'completed' | 'cancelled';
+    createdAt: string;
+    userLocation: {
+        city: string;
+        address?: string;
+    };
+    user: {
+      name: string;
+      email?: string;
+      phone?: string;
+    };
+    totalVendorsNotified: number;
+    totalAccepted: number;
+    responses: VendorResponse[];
+    leadResponseId?: string; // This is a vendor-specific field
+};
+
 export type GalleryItem = {
-    id: string;
-    vendor_id: string;
-    media_url: string;
-    media_type: 'image' | 'video';
-    caption?: string;
-    created_at: string;
+  id: string;
+  vendor_id: string;
+  media_url: string;
+  media_type: 'image' | 'video';
+  caption: string | null;
+  created_at: string;
 }

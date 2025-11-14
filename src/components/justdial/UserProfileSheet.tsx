@@ -12,7 +12,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { 
     Rocket, ChevronRight, Heart, Bookmark, User,
-    Bell, Briefcase, Mail, Headset, Shield, MessageSquare, HelpCircle, LogOut
+    Bell, Briefcase, Mail, Headset, Shield, MessageSquare, HelpCircle, LogOut, Star
 } from 'lucide-react';
 import Link from "next/link";
 import { Separator } from "../ui/separator";
@@ -24,6 +24,7 @@ import { useRouter } from 'next/navigation';
 const menuItems = [
     { icon: Heart, label: "Favorites", href: "/favourites" },
     { icon: Bookmark, label: "Saved", href: "/saved" },
+    { icon: Star, label: "My Reviews", href: "/reviews" },
     { icon: User, label: "Edit Profile", href: "/edit-profile" },
 ];
 

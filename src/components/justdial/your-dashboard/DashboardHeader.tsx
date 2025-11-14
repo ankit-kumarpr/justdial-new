@@ -1,7 +1,7 @@
 
 'use client';
 
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState, useCallback } from 'react';
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronDown, HelpCircle, X, Loader2 } from "lucide-react";
 import Link from 'next/link';
@@ -34,25 +34,74 @@ function DashboardHeaderContent({ title, showClose, rightContent }: DashboardHea
     const businessId = searchParams.get('id');
 
     const [businesses, setBusinesses] = useState<Business[]>([]);
+    const [currentBusinessName, setCurrentBusinessName] = useState(title);
+    const [currentBusinessCity, setCurrentBusinessCity] = useState('Your Business');
     const [loading, setLoading] = useState(true);
+    const [userRole, setUserRole] = useState<string | null>(null);
 
-    const currentBusiness = businesses.find(b => b._id === businessId);
+    const fetchCurrentBusinessDetails = useCallback(async (id: string, token: string) => {
+        const { name, city, error } = await getBusinessHeaderInfo(id, token);
+        if (!error && name) {
+            setCurrentBusinessName(name);
+            if (city) setCurrentBusinessCity(city);
+        } else {
+             // Fallback to title if specific fetch fails
+            setCurrentBusinessName(title);
+        }
+    }, [title]);
 
-    useEffect(() => {
-        const fetchBusinesses = async () => {
-            const token = localStorage.getItem('accessToken');
-            if (!token) return;
-            setLoading(true);
-            try {
-                const result = await apiFetch('/api/kyc/my-kyc', token);
-                setBusinesses(result.data || []);
-            } catch (error) {
-                console.error("Failed to fetch businesses for header:", error);
+    const fetchBusinesses = useCallback(async (token: string) => {
+        setLoading(true);
+        try {
+            const result = await apiFetch('/api/kyc/my-kyc', token);
+            const businessList: Business[] = result.data.map((v: any) => ({
+                _id: v._id,
+                businessName: v.businessName,
+                city: v.city,
+            }));
+            setBusinesses(businessList);
+
+            const current = businessList.find(b => b._id === businessId);
+            if (current) {
+                setCurrentBusinessName(current.businessName);
+                setCurrentBusinessCity(current.city);
+            } else if (businessId) {
+                // If the current business isn't in the list, fetch it individually
+                await fetchCurrentBusinessDetails(businessId, token);
+            } else if (businessList.length > 0) {
+                 setCurrentBusinessName(businessList[0].businessName);
+                 setCurrentBusinessCity(businessList[0].city);
             }
+
+        } catch (error) {
+            console.error("Failed to fetch businesses for header:", error);
+        } finally {
             setLoading(false);
-        };
-        fetchBusinesses();
-    }, []);
+        }
+    }, [businessId, fetchCurrentBusinessDetails]);
+
+    const handleStorageChange = useCallback(() => {
+        const token = localStorage.getItem('accessToken');
+        const userJson = localStorage.getItem('user');
+        if (userJson) {
+            try {
+                setUserRole(JSON.parse(userJson).role);
+            } catch (e) { console.error(e); }
+        } else {
+            setUserRole(null);
+        }
+
+        if (token) {
+            fetchBusinesses(token);
+        }
+    }, [fetchBusinesses]);
+    
+    useEffect(() => {
+        handleStorageChange(); // Initial fetch
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, [handleStorageChange]);
+
 
     const handleBusinessSwitch = (newId: string) => {
         const currentPath = pathname;
@@ -60,7 +109,17 @@ function DashboardHeaderContent({ title, showClose, rightContent }: DashboardHea
         router.push(newUrl);
     };
 
-    const backLink = '/my-business';
+    const isDashboardPage = pathname === '/business-dashboard';
+    
+    let backLink = `/business-dashboard?id=${businessId || ''}`;
+    if (isDashboardPage) {
+        if (userRole === 'user') {
+            backLink = '/';
+        } else {
+            backLink = '/my-business';
+        }
+    }
+
 
     return (
         <header className="bg-white/80 backdrop-blur-md shadow-lg sticky top-0 z-20 border-b border-gray-100">
@@ -76,11 +135,13 @@ function DashboardHeaderContent({ title, showClose, rightContent }: DashboardHea
                         </Link>
                     )}
                     <div>
-                        {businesses.length > 1 ? (
+                        {loading ? (
+                            <div className="h-6 w-32 bg-gray-200 rounded animate-pulse"></div>
+                        ) : businesses.length > 1 ? (
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <div className="flex items-center gap-2 cursor-pointer group">
-                                        <h1 className="font-bold text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{currentBusiness?.businessName || title}</h1>
+                                        <h1 className="font-bold text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{currentBusinessName}</h1>
                                         <ChevronDown className="h-4 w-4 text-gray-600 group-hover:text-primary transition-colors" />
                                     </div>
                                 </DropdownMenuTrigger>
@@ -93,9 +154,9 @@ function DashboardHeaderContent({ title, showClose, rightContent }: DashboardHea
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         ) : (
-                           <h1 className="font-bold text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{currentBusiness?.businessName || title}</h1>
+                           <h1 className="font-bold text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">{currentBusinessName}</h1>
                         )}
-                        <p className="text-sm text-gray-500">{currentBusiness?.city || 'Your Business'}</p>
+                        <p className="text-sm text-gray-500">{currentBusinessCity}</p>
                     </div>
                 </div>
                 
@@ -120,6 +181,25 @@ function DashboardHeaderContent({ title, showClose, rightContent }: DashboardHea
         </header>
     );
 }
+
+// Separate server action to fetch just the header info for a single business.
+async function getBusinessHeaderInfo(businessId: string, token: string): Promise<{ name: string | null; city: string | null; error: string | null }> {
+    if (!businessId || !token) {
+        return { name: null, city: null, error: 'Business ID and token are required.' };
+    }
+    
+    try {
+        const result = await apiFetch(`/api/vendor/profile/business/${businessId}`, token, { cache: 'no-store' });
+        const business = result.data?.business;
+        if (!business) {
+            return { name: null, city: null, error: 'Business not found.' };
+        }
+        return { name: business.businessName, city: business.address?.city, error: null };
+    } catch (e: any) {
+        return { name: null, city: null, error: e.message };
+    }
+}
+
 
 export function DashboardHeader(props: DashboardHeaderProps) {
     return (

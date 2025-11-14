@@ -14,7 +14,7 @@ import { UserProfileSheet } from './UserProfileSheet';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useRouter } from 'next/navigation';
-import { isVendor } from '@/app/my-business/actions';
+import { getVendorStatus } from '@/app/my-business/actions';
 import { useLocation } from '@/contexts/LocationContext';
 
 export function JustdialHeader() {
@@ -22,6 +22,7 @@ export function JustdialHeader() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isVendorState, setIsVendorState] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
+  const [singleBusinessId, setSingleBusinessId] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
@@ -52,19 +53,23 @@ export function JustdialHeader() {
                 const user = JSON.parse(userJson);
                 setUserRole(user.role || null);
                 if(user && user.id) {
-                  const vendorStatus = await isVendor(token);
-                  setIsVendorState(vendorStatus);
+                  const { isVendor, singleBusinessId } = await getVendorStatus(token);
+                  setIsVendorState(isVendor);
+                  setSingleBusinessId(singleBusinessId);
                 } else {
                   setIsVendorState(false);
+                  setSingleBusinessId(null);
                 }
             } catch (e) {
                 console.error("Failed to parse user data or check vendor status", e);
                 setIsVendorState(false);
+                setSingleBusinessId(null);
                 setUserRole(null);
             }
         } else {
             setIsLoggedIn(false);
             setIsVendorState(false);
+            setSingleBusinessId(null);
             setUserRole(null);
         }
       }
@@ -154,6 +159,8 @@ export function JustdialHeader() {
       setIsMobileMenuOpen(false);
     }
   };
+
+  const myBusinessHref = isVendorState ? (singleBusinessId ? `/business-dashboard?id=${singleBusinessId}` : '/my-business') : '#';
 
   return (
     <motion.header
@@ -323,7 +330,7 @@ export function JustdialHeader() {
                       </div>
                     ) : (
                       <Link 
-                        href="/my-business" 
+                        href={myBusinessHref} 
                         onClick={() => setIsMobileMenuOpen(false)}
                         className="flex items-center gap-3 p-3 hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 rounded-xl transition-all duration-300 group"
                       >
@@ -420,7 +427,7 @@ export function JustdialHeader() {
             {isLoggedIn ? (
               isVendorState ? (
                 <Link 
-                  href="/my-business" 
+                  href={myBusinessHref} 
                   className="flex items-center gap-1 hover:text-accent transition-all duration-300 hover:scale-105 group"
                 >
                   <Briefcase className="h-4 w-4" />

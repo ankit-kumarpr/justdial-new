@@ -1,3 +1,4 @@
+
 export type Lead = {
     _id: string;
     searchKeyword: string;
@@ -13,6 +14,7 @@ export type Lead = {
     };
     totalVendorsNotified: number;
     totalAccepted: number;
+    leadResponseId?: string; // Adding this for socket event handling
 };
 export const leadsData = [
     {

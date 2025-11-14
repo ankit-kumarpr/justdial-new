@@ -1,15 +1,15 @@
+
 'use server';
 
-import { createSupabaseServerClient } from '@/lib/supabase/client';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
+import { apiFetch } from '@/lib/api-client';
 
 const timingsSchema = z.object({
   businessId: z.string().min(1, "Business ID is required."),
-  workingDays: z.array(z.string()).min(1, "Select at least one working day."),
+  workingDays: z.array(z.string()).min(1, "Please select at least one working day."),
   openTime: z.string().min(1, "Opening time is required."),
   closingTime: z.string().min(1, "Closing time is required."),
-  timingNotes: z.string().optional(),
 }).refine(data => data.openTime < data.closingTime, {
   message: "Closing time must be after opening time.",
   path: ["closingTime"],
@@ -27,28 +27,42 @@ export type UpdateTimingsState = {
 };
 
 
-export async function getBusinessTimings(businessId: string) {
-    if (!businessId) return { data: null, error: 'Business ID is required.' };
-    const supabase = createSupabaseServerClient();
-    const { data, error } = await supabase
-        .from('vendors')
-        .select('workingDays, openTime, closingTime, timing_notes')
-        .eq('id', businessId)
-        .single();
-        
-    if (error) return { data: null, error: error.message };
-    return { data, error: null };
+export async function getBusinessTimings(businessId: string, token: string) {
+    if (!businessId || !token) return { data: null, error: 'Business ID and token are required.' };
+    
+    try {
+        const result = await apiFetch(`/api/vendor/profile/business/${businessId}`, token, { cache: 'no-store' });
+        if (result.success && result.data.business) {
+            const business = result.data.business;
+            return {
+                data: {
+                    workingDays: business.workingDays,
+                    openTime: business.businessHoursOpen,
+                    closingTime: business.businessHoursClose,
+                },
+                error: null
+            };
+        }
+        return { data: null, error: 'Business timings not found.' };
+
+    } catch(e) {
+        return { data: null, error: (e as Error).message };
+    }
 }
 
 
 export async function updateBusinessTimings(prevState: UpdateTimingsState, formData: FormData): Promise<UpdateTimingsState> {
   const businessId = formData.get('businessId') as string;
+  const token = formData.get('token') as string;
+  if (!token) {
+    return { success: false, message: "Authentication is required." };
+  }
+
   const rawData = {
     businessId,
-    workingDays: formData.getAll('workingDays'),
+    workingDays: JSON.parse(formData.get('workingDays') as string || '[]'),
     openTime: formData.get('openTime'),
     closingTime: formData.get('closingTime'),
-    timingNotes: formData.get('timingNotes'),
   };
   
   const validatedFields = timingsSchema.safeParse(rawData);
@@ -60,20 +74,21 @@ export async function updateBusinessTimings(prevState: UpdateTimingsState, formD
     };
   }
   
-  const supabase = createSupabaseServerClient();
+  const payload = {
+    workingDays: validatedFields.data.workingDays,
+    businessHoursOpen: validatedFields.data.openTime,
+    businessHoursClose: validatedFields.data.closingTime,
+  };
   
   try {
-    const { error } = await supabase
-      .from('vendors')
-      .update({ 
-        workingDays: validatedFields.data.workingDays,
-        openTime: validatedFields.data.openTime,
-        closingTime: validatedFields.data.closingTime,
-        timing_notes: validatedFields.data.timingNotes,
-      })
-      .eq('id', businessId);
+    const result = await apiFetch(`/api/kyc/businesstimings/${businessId}`, token, {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+    });
 
-    if (error) throw error;
+    if (!result.success) {
+        throw new Error(result.message || 'Failed to update business timings.');
+    }
 
     revalidatePath(`/business-dashboard?id=${businessId}`);
     

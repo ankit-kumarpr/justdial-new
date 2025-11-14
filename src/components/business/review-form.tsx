@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useState, useMemo, useActionState } from 'react';
@@ -71,7 +72,7 @@ function StarRatingInput({ value, onChange }: { value: number; onChange: (value:
   );
 }
 
-export function ReviewForm({ businessId }: { businessId: string }) {
+export function ReviewForm({ businessId, onReviewSubmitSuccess }: { businessId: string, onReviewSubmitSuccess?: (businessId: string) => void }) {
   const initialState: State = { message: null, errors: {} };
   const [state, dispatch] = useActionState(submitReview, initialState);
   const { toast } = useToast();
@@ -96,9 +97,12 @@ export function ReviewForm({ businessId }: { businessId: string }) {
             if(state.resetKey) {
                 setKey(state.resetKey);
             }
+            if (onReviewSubmitSuccess) {
+              onReviewSubmitSuccess(businessId);
+            }
         }
     }
-  }, [state, toast]);
+  }, [state, toast, onReviewSubmitSuccess, businessId]);
   
   const formKey = useMemo(() => key, [key]);
 
@@ -112,17 +116,12 @@ export function ReviewForm({ businessId }: { businessId: string }) {
         <form key={formKey} action={dispatch} className="space-y-6">
           <input type="hidden" name="businessId" value={businessId} />
           <input type="hidden" name="rating" value={rating} />
+           <input type="hidden" name="token" value={typeof window !== 'undefined' ? localStorage.getItem('accessToken') || '' : ''} />
           
           <div className="space-y-2">
             <Label htmlFor="rating" className="text-base">Your Rating</Label>
             <StarRatingInput value={rating} onChange={setRating} />
             {state.errors?.rating && <p className="text-sm font-medium text-destructive">{state.errors.rating[0]}</p>}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="author" className="text-base">Your Name</Label>
-            <Input id="author" name="author" placeholder="John Doe" />
-            {state.errors?.author && <p className="text-sm font-medium text-destructive">{state.errors.author[0]}</p>}
           </div>
           
           <div className="space-y-2">

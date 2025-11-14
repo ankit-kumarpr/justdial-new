@@ -12,17 +12,36 @@ type SearchSectionProps = {
 };
 
 export function SearchSection({ onSearch }: SearchSectionProps) {
-    const { city, setCity, isLoading } = useLocation();
+    const { city, setCity, isLoading, setLatitude, setLongitude } = useLocation();
     const [localCity, setLocalCity] = useState(city);
     const [isFocused, setIsFocused] = useState(false);
     const [query, setQuery] = useState('');
     const [suggestions, setSuggestions] = useState<string[]>([]);
     const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
     const searchContainerRef = useRef<HTMLDivElement>(null);
+    const [allCities, setAllCities] = useState<string[]>([]);
+    const [focusedSuggestionIndex, setFocusedSuggestionIndex] = useState(-1);
+    const queryInputRef = useRef<HTMLInputElement>(null);
+    const cityInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         setLocalCity(city);
     }, [city]);
+
+    useEffect(() => {
+        const fetchCities = async () => {
+            try {
+                const response = await fetch('/api/cities');
+                const data = await response.json();
+                if (data.cities) {
+                    setAllCities(data.cities);
+                }
+            } catch (error) {
+                console.error("Failed to fetch cities:", error);
+            }
+        };
+        fetchCities();
+    }, []);
 
     useEffect(() => {
         if (query.length < 2) {
@@ -38,6 +57,7 @@ export function SearchSection({ onSearch }: SearchSectionProps) {
                     if (data && data.data && Array.isArray(data.data.suggestions)) {
                         setSuggestions(data.data.suggestions);
                         setIsSuggestionsOpen(true);
+                        setFocusedSuggestionIndex(-1);
                     } else {
                         setSuggestions([]);
                         setIsSuggestionsOpen(false);
@@ -48,7 +68,7 @@ export function SearchSection({ onSearch }: SearchSectionProps) {
                     setSuggestions([]);
                     setIsSuggestionsOpen(false);
                 });
-        }, 300); // 300ms debounce
+        }, 300);
 
         return () => clearTimeout(debounceTimer);
     }, [query]);
@@ -65,13 +85,76 @@ export function SearchSection({ onSearch }: SearchSectionProps) {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
-    
+
     const handleSearch = (searchTerm: string) => {
         if (!searchTerm.trim()) return;
         setIsSuggestionsOpen(false);
         setQuery(searchTerm);
         onSearch(searchTerm);
     };
+
+    const handleCityInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setLocalCity(value);
+        if (value.length > 1) {
+            const filteredCities = allCities.filter(c =>
+                c.toLowerCase().startsWith(value.toLowerCase())
+            ).slice(0, 7);
+            setSuggestions(filteredCities);
+            setIsSuggestionsOpen(true);
+            setFocusedSuggestionIndex(-1);
+        } else {
+            setSuggestions([]);
+            setIsSuggestionsOpen(false);
+        }
+    };
+
+    const handleCitySuggestionClick = async (selectedCity: string) => {
+        setLocalCity(selectedCity);
+        setCity(selectedCity);
+        setSuggestions([]);
+        setIsSuggestionsOpen(false);
+
+        try {
+            const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${selectedCity}`);
+            const data = await response.json();
+            if (data.results && data.results.length > 0) {
+                const { latitude, longitude } = data.results[0];
+                setLatitude(latitude);
+                setLongitude(longitude);
+            }
+        } catch (error) {
+            console.error("Failed to fetch coordinates for city:", error);
+        }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (!isSuggestionsOpen || suggestions.length === 0) return;
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            setFocusedSuggestionIndex(prev => (prev + 1) % suggestions.length);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            setFocusedSuggestionIndex(prev => (prev - 1 + suggestions.length) % suggestions.length);
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (focusedSuggestionIndex !== -1) {
+                const selectedSuggestion = suggestions[focusedSuggestionIndex];
+                if (e.currentTarget === cityInputRef.current) {
+                    handleCitySuggestionClick(selectedSuggestion);
+                    queryInputRef.current?.focus();
+                } else if (e.currentTarget === queryInputRef.current) {
+                    handleSearch(selectedSuggestion);
+                }
+            } else if (e.currentTarget === queryInputRef.current && query) {
+                handleSearch(query);
+            }
+        } else if (e.key === 'Escape') {
+            setIsSuggestionsOpen(false);
+        }
+    };
+
 
     return (
         <div className="relative">
@@ -154,10 +237,10 @@ export function SearchSection({ onSearch }: SearchSectionProps) {
                 </motion.p>
             </motion.div>
 
-            <div className="relative z-20" ref={searchContainerRef}>
+            <div className="relative" ref={searchContainerRef}>
                 <div className="flex flex-col gap-4">
                      <motion.div
-                        className="relative group"
+                        className="relative group z-30"
                         whileHover={{ scale: 1.01 }}
                         transition={{ duration: 0.2 }}
                     >
@@ -165,30 +248,58 @@ export function SearchSection({ onSearch }: SearchSectionProps) {
                         <div className="relative">
                             <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 transition-all duration-300 group-hover:text-primary group-hover:scale-110" />
                             <Input
+                                ref={cityInputRef}
                                 value={isLoading ? 'Fetching location...' : localCity}
-                                onChange={(e) => setLocalCity(e.target.value)}
+                                onChange={handleCityInputChange}
+                                onKeyDown={handleKeyDown}
                                 onBlur={() => setCity(localCity)}
+                                onFocus={() => setQuery('')}
                                 disabled={isLoading}
                                 className="pl-12 h-16 text-lg border-2 border-gray-200 rounded-2xl focus:border-primary hover:border-gray-300 transition-all duration-300 bg-white shadow-sm hover:shadow-md focus:shadow-lg"
                                 placeholder="Enter location"
                                 data-testid="search-location-input"
                             />
+                             {isSuggestionsOpen && suggestions.length > 0 && document.activeElement === cityInputRef.current && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="absolute top-full mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-100 overflow-hidden z-30"
+                                >
+                                    <ul className="py-1">
+                                        {suggestions.map((suggestion, index) => (
+                                            <li
+                                                key={index}
+                                                className={`px-4 py-3 cursor-pointer text-gray-700 transition-colors ${focusedSuggestionIndex === index ? 'bg-primary/10' : 'hover:bg-primary/10'}`}
+                                                onMouseDown={() => handleCitySuggestionClick(suggestion)}
+                                                onMouseEnter={() => setFocusedSuggestionIndex(index)}
+                                            >
+                                                {suggestion}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </motion.div>
+                            )}
                         </div>
                     </motion.div>
 
                     <form
-                        className="relative group"
+                        className="relative group z-20"
                         onSubmit={(e) => { e.preventDefault(); handleSearch(query); }}
                     >
                         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         <div className="relative">
                             <Input
+                                ref={queryInputRef}
                                 placeholder="Search for Restaurants, Hotels, Services..."
                                 className="h-16 text-lg border-2 border-gray-200 rounded-2xl pr-16 focus:border-primary hover:border-gray-300 transition-all duration-300 bg-white shadow-sm hover:shadow-md focus:shadow-lg pl-6"
                                 data-testid="search-query-input"
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
-                                onFocus={() => setIsFocused(true)}
+                                onKeyDown={handleKeyDown}
+                                onFocus={() => {
+                                    setIsFocused(true);
+                                    setLocalCity(city); // Reset city input if user focuses on search
+                                }}
                             />
                             <motion.div
                                 whileHover={{ scale: 1.1, rotate: 5 }}
@@ -209,18 +320,19 @@ export function SearchSection({ onSearch }: SearchSectionProps) {
                                 </Button>
                             </motion.div>
                         </div>
-                        {isSuggestionsOpen && suggestions.length > 0 && (
+                        {isSuggestionsOpen && suggestions.length > 0 && query.length > 1 && (
                             <motion.div
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className="absolute top-full w-full bg-white rounded-b-2xl shadow-2xl border border-gray-100 overflow-hidden z-30"
+                                className="absolute top-full mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-100 overflow-hidden z-20"
                             >
                                 <ul className="py-2">
                                     {suggestions.map((suggestion, index) => (
                                         <li
                                             key={index}
-                                            className="px-4 py-3 cursor-pointer hover:bg-primary/10 text-gray-700 transition-colors"
+                                            className={`px-4 py-3 cursor-pointer text-gray-700 transition-colors ${focusedSuggestionIndex === index ? 'bg-primary/10' : 'hover:bg-primary/10'}`}
                                             onMouseDown={() => handleSearch(suggestion)}
+                                            onMouseEnter={() => setFocusedSuggestionIndex(index)}
                                         >
                                             {suggestion}
                                         </li>

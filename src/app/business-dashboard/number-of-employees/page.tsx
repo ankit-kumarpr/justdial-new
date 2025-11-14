@@ -1,64 +1,96 @@
 
 'use client';
 
-import { useState, Suspense, useEffect, useActionState } from 'react';
+import { Suspense, useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
+import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { ChevronLeft, Info, Loader2, AlertCircle as AlertCircleIcon } from 'lucide-react';
+import { ChevronLeft, Loader2, AlertCircle as AlertCircleIcon, Search, Users, UserPlus, Trash2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { pageTransition } from '@/lib/animations';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useSearchParams } from 'next/navigation';
-import { supabase } from '@/lib/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { updateEmployeeCount, type EmployeesState } from './actions';
+import { DashboardHeader } from '@/components/justdial/your-dashboard/DashboardHeader';
+import { Input } from '@/components/ui/input';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { searchUsers, getEmployees, addEmployee, removeEmployee } from '../employees/actions';
 
-const employeeOptions = [ 'Less than 10', '10 - 100', '100 - 500', '500 - 1,000', '1,000 - 2,000', '2,000 - 5,000', '5,000 - 10,000', 'More than 10,000' ];
-
-function NumberOfEmployeesForm() {
+function EmployeeManagementComponent() {
     const searchParams = useSearchParams();
     const businessId = searchParams.get('id');
     const { toast } = useToast();
+    
     const [isLoading, setIsLoading] = useState(true);
-    const [selectedOption, setSelectedOption] = useState<string | undefined>();
+    const [employees, setEmployees] = useState<any[]>([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState<any[]>([]);
+    const [isSearching, setIsSearching] = useState(false);
     
-    const initialState: EmployeesState = {};
-    const [state, formAction, isPending] = useActionState(updateEmployeeCount, initialState);
+    const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null;
 
-    useEffect(() => {
-        if (businessId) {
-            const fetchEmployeeCount = async () => {
-                setIsLoading(true);
-                const { data, error } = await supabase
-                    .from('vendors')
-                    .select('numberOfEmployees')
-                    .eq('id', businessId)
-                    .single();
-                if (data && data.numberOfEmployees) {
-                    setSelectedOption(data.numberOfEmployees);
-                }
-                setIsLoading(false);
-            };
-            fetchEmployeeCount();
+    const fetchEmployees = useCallback(async () => {
+        if (!businessId || !token) return;
+        setIsLoading(true);
+        const { data, error } = await getEmployees(businessId, token);
+        if (error) {
+            toast({ title: "Error", description: `Could not fetch employees: ${error}`, variant: 'destructive' });
         } else {
-            setIsLoading(false);
+            setEmployees(data || []);
         }
-    }, [businessId]);
+        setIsLoading(false);
+    }, [businessId, token, toast]);
+
+    useEffect(() => {
+        fetchEmployees();
+    }, [fetchEmployees]);
     
     useEffect(() => {
-        if (state?.message) {
-            toast({
-                title: state.success ? "Success!" : "Error",
-                description: state.message,
-                variant: state.success ? 'default' : 'destructive'
-            });
+        if (searchQuery.length < 2) {
+            setSearchResults([]);
+            return;
         }
-    }, [state, toast]);
 
-    if (isLoading) return <div>Loading...</div>;
+        const handler = setTimeout(async () => {
+            if (!token) return;
+            setIsSearching(true);
+            const { data } = await searchUsers(searchQuery, token);
+            setSearchResults(data || []);
+            setIsSearching(false);
+        }, 500);
+
+        return () => clearTimeout(handler);
+    }, [searchQuery, token]);
+
+    const handleAddEmployee = async (userId: string) => {
+        if (!businessId || !token) return;
+
+        const result = await addEmployee(businessId, userId, token);
+        if (result.success) {
+            toast({ title: 'Success', description: result.message });
+            setSearchQuery('');
+            setSearchResults([]);
+            fetchEmployees();
+        } else {
+            toast({ title: 'Error', description: result.message, variant: 'destructive' });
+        }
+    };
+
+    const handleRemoveEmployee = async (userId: string) => {
+        if (!businessId || !token) return;
+
+        const result = await removeEmployee(businessId, userId, token);
+        if (result.success) {
+            toast({ title: 'Success', description: result.message });
+            fetchEmployees();
+        } else {
+            toast({ title: 'Error', description: result.message, variant: 'destructive' });
+        }
+    };
+    
+    if (isLoading && employees.length === 0) {
+        return <div className="text-center p-8"><Loader2 className="h-8 w-8 animate-spin mx-auto" /></div>;
+    }
 
     if (!businessId) {
         return (
@@ -73,55 +105,89 @@ function NumberOfEmployeesForm() {
     }
     
     return (
-         <form action={formAction}>
-            <input type="hidden" name="businessId" value={businessId} />
-            <div className="max-w-xl mx-auto space-y-6">
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                    <Alert className="bg-primary/5 border-primary/20 text-primary rounded-3xl shadow-lg">
-                        <Info className="h-5 w-5" />
-                        <AlertDescription>
-                            Please select the number of employees at your company
-                        </AlertDescription>
-                    </Alert>
-                </motion.div>
-                
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
-                    <Card className="rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border-none bg-white/80 backdrop-blur-sm">
-                        <CardContent className="p-6">
-                            <RadioGroup name="employees" value={selectedOption} onValueChange={setSelectedOption} className="space-y-4">
-                                {employeeOptions.map((option, index) => (
-                                    <motion.div
-                                        key={option}
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ duration: 0.3, delay: 0.2 + index * 0.05 }}
-                                        className="flex items-center space-x-3"
-                                    >
-                                        <RadioGroupItem value={option} id={option} />
-                                        <Label htmlFor={option} className="font-normal text-base cursor-pointer">{option}</Label>
-                                    </motion.div>
+        <div className="max-w-4xl mx-auto space-y-6">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Search for Employees</CardTitle>
+                        <CardDescription>Search for users by name or email to add them to your business.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400"/>
+                            <Input 
+                                placeholder="Search by name or email..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="pl-10"
+                            />
+                        </div>
+                        {isSearching ? (
+                            <div className="text-center p-4"><Loader2 className="h-6 w-6 animate-spin mx-auto" /></div>
+                        ) : searchResults.length > 0 ? (
+                            <div className="mt-4 space-y-2 max-h-60 overflow-y-auto">
+                                {searchResults.map(user => (
+                                    <div key={user._id} className="flex items-center justify-between p-2 bg-gray-50 rounded-md">
+                                        <div className="flex items-center gap-3">
+                                            <Avatar className="h-8 w-8"><AvatarFallback>{user.name.charAt(0)}</AvatarFallback></Avatar>
+                                            <div>
+                                                <p className="text-sm font-medium">{user.name}</p>
+                                                <p className="text-xs text-gray-500">{user.email}</p>
+                                            </div>
+                                        </div>
+                                        <Button size="sm" onClick={() => handleAddEmployee(user._id)}>
+                                            <UserPlus className="mr-2 h-4 w-4" />
+                                            Add
+                                        </Button>
+                                    </div>
                                 ))}
-                            </RadioGroup>
-                        </CardContent>
-                    </Card>
-                </motion.div>
-            </div>
-             <footer className="bg-white/80 backdrop-blur-md py-4 border-t border-gray-100 sticky bottom-0 z-20 shadow-lg mt-6">
-                <div className="container mx-auto px-4 max-w-xl">
-                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                         <Button type="submit" className="w-full bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300" disabled={isPending}>
-                            {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                            {isPending ? 'Saving...' : 'Save'}
-                        </Button>
-                    </motion.div>
-                </div>
-            </footer>
-        </form>
+                            </div>
+                        ) : searchQuery.length >= 2 ? (
+                            <p className="text-sm text-center text-gray-500 mt-4">No users found.</p>
+                        ) : null}
+                    </CardContent>
+                </Card>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Current Employees ({employees.length})</CardTitle>
+                        <CardDescription>The list of individuals associated with your business.</CardDescription>
+                    </CardHeader>
+                     <CardContent>
+                        {isLoading ? (
+                             <div className="text-center p-4"><Loader2 className="h-6 w-6 animate-spin mx-auto" /></div>
+                        ) : employees.length > 0 ? (
+                            <div className="space-y-3">
+                                {employees.map(employee => (
+                                    <div key={employee.userId._id} className="flex items-center justify-between p-3 border rounded-lg">
+                                         <div className="flex items-center gap-3">
+                                            <Avatar><AvatarFallback>{employee.userId.name.charAt(0)}</AvatarFallback></Avatar>
+                                            <div>
+                                                <p className="font-semibold">{employee.userId.name}</p>
+                                                <p className="text-sm text-gray-500">{employee.userId.email}</p>
+                                            </div>
+                                        </div>
+                                        <Button variant="destructive" size="sm" onClick={() => handleRemoveEmployee(employee.userId._id)}>
+                                            <Trash2 className="mr-2 h-4 w-4" />
+                                            Remove
+                                        </Button>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-center text-gray-500 py-8">No employees have been added yet.</p>
+                        )}
+                     </CardContent>
+                </Card>
+            </motion.div>
+        </div>
     );
 }
 
 
-function NumberOfEmployeesPage() {
+function EmployeeManagementPage() {
     return (
         <motion.div
             initial="initial"
@@ -130,22 +196,11 @@ function NumberOfEmployeesPage() {
             variants={pageTransition}
             className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 relative overflow-hidden"
         >
-            <header className="bg-white/80 backdrop-blur-md shadow-lg sticky top-0 z-20 border-b border-gray-100">
-                <div className="container mx-auto px-4 py-4 flex items-center gap-4">
-                    <Link href="/business-dashboard">
-                        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                            <Button variant="ghost" size="icon">
-                                <ChevronLeft className="h-6 w-6" />
-                            </Button>
-                        </motion.div>
-                    </Link>
-                    <h1 className="font-bold text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Number of Employees</h1>
-                </div>
-            </header>
+            <DashboardHeader title="Manage Employees" />
 
             <main className="flex-grow container mx-auto px-4 py-6 relative z-10">
-                <Suspense fallback={<div>Loading form...</div>}>
-                    <NumberOfEmployeesForm />
+                <Suspense fallback={<div className="text-center p-8"><Loader2 className="h-8 w-8 animate-spin mx-auto" /></div>}>
+                    <EmployeeManagementComponent />
                 </Suspense>
             </main>
         </motion.div>
@@ -155,7 +210,7 @@ function NumberOfEmployeesPage() {
 export default function Page() {
   return (
     <Suspense>
-      <NumberOfEmployeesPage />
+      <EmployeeManagementPage />
     </Suspense>
   )
 }

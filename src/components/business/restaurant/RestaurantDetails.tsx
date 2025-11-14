@@ -9,7 +9,7 @@ import { RestaurantTabs } from "./RestaurantTabs";
 import Image from "next/image";
 import { CardHeader, CardTitle } from "@/components/ui/card";
 
-export function RestaurantDetails({ business }: { business: Business }) {
+export function BusinessDetails({ business }: { business: Business }) {
     const ratingColor = business.rating >= 4.0 ? 'bg-green-600' : business.rating >= 3.0 ? 'bg-yellow-500' : 'bg-red-600';
 
     return (

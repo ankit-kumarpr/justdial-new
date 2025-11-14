@@ -1,9 +1,9 @@
 
 'use server';
 
-import { createSupabaseServerClient } from '@/lib/supabase/client';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
+import { apiFetch } from '@/lib/api-client';
 
 const editBusinessNameSchema = z.object({
   businessId: z.string().min(1, "Business ID is required."),
@@ -19,19 +19,33 @@ export type EditBusinessNameState = {
   success?: boolean;
 };
 
-export async function getBusinessName(businessId: string) {
+export async function getBusinessName(businessId: string, token: string): Promise<{ name: string | null, error: string | null }> {
     if (!businessId) return { name: null, error: 'Business ID is required.' };
-    const supabase = createSupabaseServerClient();
-    const { data, error } = await supabase
-        .from('vendors')
-        .select('businessName')
-        .eq('id', businessId)
-        .single();
-    if (error) return { name: null, error: error.message };
-    return { name: data?.businessName, error: null };
+    if (!token) return { name: null, error: 'Authentication token is required.' };
+    
+    try {
+        // This endpoint seems suitable for fetching public business profile info, including the name.
+        const result = await apiFetch(`/api/vendor/profile/business/${businessId}`, token, { cache: 'no-store' });
+        const businessName = result.data?.business?.businessName;
+        if (!businessName) {
+            return { name: null, error: 'Business name not found.' };
+        }
+        return { name: businessName, error: null };
+    } catch (e: any) {
+        console.error("Error fetching business name from API:", e.message);
+        return { name: null, error: e.message };
+    }
 }
 
 export async function updateBusinessName(prevState: EditBusinessNameState, formData: FormData): Promise<EditBusinessNameState> {
+  const token = formData.get('token') as string;
+  if (!token) {
+    return {
+      errors: { server: ['Authentication token missing.'] },
+      message: 'You must be logged in to update the business name.',
+    };
+  }
+  
   const validatedFields = editBusinessNameSchema.safeParse(Object.fromEntries(formData.entries()));
 
   if (!validatedFields.success) {
@@ -42,16 +56,15 @@ export async function updateBusinessName(prevState: EditBusinessNameState, formD
   }
 
   const { businessId, businessName } = validatedFields.data;
-  const supabase = createSupabaseServerClient();
-
+  
   try {
-    const { error } = await supabase
-      .from('vendors')
-      .update({ businessName: businessName })
-      .eq('id', businessId);
+    const result = await apiFetch(`/api/kyc/businessname/${businessId}`, token, {
+        method: 'PUT',
+        body: JSON.stringify({ businessName }),
+    });
 
-    if (error) {
-      throw error;
+    if (!result.success) {
+        throw new Error(result.message || 'Failed to update business name.');
     }
 
     revalidatePath('/my-business');

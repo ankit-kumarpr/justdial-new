@@ -1,77 +1,72 @@
 
 'use server';
 
-import { createSupabaseServerClient } from '@/lib/supabase/client';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
-import { v4 as uuidv4 } from 'uuid';
-
-const contactNumberSchema = z.object({
-  id: z.string(),
-  contact_number: z.string().regex(/^\d{10}$/, "Enter a valid 10-digit number.").or(z.literal('')),
-});
+import { apiFetch } from '@/lib/api-client';
 
 const updateContactDetailsSchema = z.object({
   contactPersonTitle: z.string().optional(),
   contactPersonName: z.string().min(2, "Contact person name is required."),
   primaryMobileNumber: z.string().regex(/^\d{10}$/, "Primary mobile number is required and must be 10 digits."),
   primaryWhatsappNumber: z.string().regex(/^\d{10}$/, "Primary WhatsApp number is required and must be 10 digits.").optional().or(z.literal('')),
-  additionalMobileNumbers: z.array(contactNumberSchema),
-  additionalWhatsappNumbers: z.array(contactNumberSchema),
+  email: z.string().email("Invalid email address."),
 });
 
 export type ContactState = {
   errors?: {
     contactPersonName?: string[];
     primaryMobileNumber?: string[];
+    email?: string[];
     server?: string[];
   };
   message?: string | null;
   success?: boolean;
 };
 
-export async function getContactDetails(businessId: string) {
-    if (!businessId) return { data: null, error: 'Business ID is required.' };
-    const supabase = createSupabaseServerClient();
+export async function getContactDetails(businessId: string, token: string) {
+    if (!businessId || !token) {
+        return { data: null, error: 'Business ID and token are required.' };
+    }
+
     try {
-        const { data: vendorData, error: vendorError } = await supabase
-            .from('vendors')
-            .select('contactPersonTitle, contactPersonName, primaryMobileNumber, primaryWhatsappNumber')
-            .eq('id', businessId)
-            .single();
-
-        if (vendorError) throw vendorError;
-
-        const { data: contactsData, error: contactsError } = await supabase
-            .from('vendor_contacts')
-            .select('id, contact_type, contact_number')
-            .eq('vendor_id', businessId);
-
-        if (contactsError) throw contactsError;
-
-        const data = {
-            contactPersonTitle: vendorData?.contactPersonTitle,
-            contactPersonName: vendorData?.contactPersonName,
-            primaryMobileNumber: vendorData?.primaryMobileNumber,
-            primaryWhatsappNumber: vendorData?.primaryWhatsappNumber,
-            additionalMobileNumbers: contactsData?.filter(c => c.contact_type === 'mobile') || [],
-            additionalWhatsappNumbers: contactsData?.filter(c => c.contact_type === 'whatsapp') || [],
-        };
+        const result = await apiFetch(`/api/vendor/profile/business/${businessId}`, token, { cache: 'no-store' });
         
-        return { data, error: null };
+        if (result.success && result.data.business) {
+            const businessData = result.data.business;
+            const contactData = {
+                title: businessData.title,
+                contactPerson: businessData.contactPerson,
+                mobileNumber: businessData.mobileNumber,
+                whatsappNumber: businessData.whatsappNumber,
+                email: businessData.email,
+            };
+            return { data: contactData, error: null };
+        }
+        
+        return { data: null, error: 'Business profile not found.' };
 
     } catch (e: any) {
+        console.error("Error fetching contact details from API:", e.message);
         return { data: null, error: e.message };
     }
 }
 
 export async function updateContactDetails(prevState: ContactState, formData: FormData): Promise<ContactState> {
   const businessId = formData.get('businessId') as string;
-  const rawData = JSON.parse(formData.get('contactDetails') as string);
+  const token = formData.get('token') as string;
   
-  if (!businessId) {
-      return { success: false, message: 'Business ID is missing.' };
+  if (!businessId || !token) {
+      return { success: false, message: 'Business ID or token is missing.' };
   }
+  
+  const rawData = {
+    contactPersonTitle: formData.get('contactPersonTitle'),
+    contactPersonName: formData.get('contactPersonName'),
+    primaryMobileNumber: formData.get('primaryMobileNumber'),
+    primaryWhatsappNumber: formData.get('primaryWhatsappNumber'),
+    email: formData.get('email'),
+  };
   
   const validatedFields = updateContactDetailsSchema.safeParse(rawData);
   
@@ -83,64 +78,31 @@ export async function updateContactDetails(prevState: ContactState, formData: Fo
       };
   }
 
-  const { contactPersonTitle, contactPersonName, primaryMobileNumber, primaryWhatsappNumber, additionalMobileNumbers, additionalWhatsappNumbers } = validatedFields.data;
+  const { contactPersonTitle, contactPersonName, primaryMobileNumber, primaryWhatsappNumber, email } = validatedFields.data;
   
-  const supabase = createSupabaseServerClient();
+  const payload = {
+    title: contactPersonTitle,
+    contactPerson: contactPersonName,
+    mobileNumber: primaryMobileNumber,
+    whatsappNumber: primaryWhatsappNumber,
+    email: email
+  };
   
   try {
-    // 1. Update the main vendors table with primary info
-    const { error: vendorUpdateError } = await supabase
-      .from('vendors')
-      .update({ 
-        contactPersonTitle, 
-        contactPersonName,
-        primaryMobileNumber,
-        primaryWhatsappNumber: primaryWhatsappNumber || null,
-       })
-      .eq('id', businessId);
-      
-    if (vendorUpdateError) throw vendorUpdateError;
+    const result = await apiFetch(`/api/kyc/business/${businessId}/contact`, token, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    });
 
-    // 2. Prepare all additional contacts for upsert
-    const mobileContactsToUpsert = additionalMobileNumbers
-        .filter(c => c.contact_number)
-        .map(c => ({ id: c.id.includes('-') ? uuidv4() : c.id, vendor_id: businessId, contact_type: 'mobile', contact_number: c.contact_number }));
-
-    const whatsappContactsToUpsert = additionalWhatsappNumbers
-        .filter(c => c.contact_number)
-        .map(c => ({ id: c.id.includes('-') ? uuidv4() : c.id, vendor_id: businessId, contact_type: 'whatsapp', contact_number: c.contact_number }));
-
-    const allContactsToUpsert = [...mobileContactsToUpsert, ...whatsappContactsToUpsert];
-
-    if (allContactsToUpsert.length > 0) {
-        const { error: upsertError } = await supabase.from('vendor_contacts').upsert(allContactsToUpsert, { onConflict: 'id' });
-        if (upsertError) throw upsertError;
-    }
-    
-    // 3. Handle deletions
-    const currentIdsInForm = new Set(allContactsToUpsert.map(c => c.id));
-    const { data: existingContacts, error: fetchError } = await supabase
-      .from('vendor_contacts')
-      .select('id')
-      .eq('vendor_id', businessId);
-
-    if (fetchError) throw fetchError;
-    
-    const idsToDelete = existingContacts.filter(c => !currentIdsInForm.has(c.id)).map(c => c.id);
-
-    if(idsToDelete.length > 0) {
-      const { error: deleteError } = await supabase
-        .from('vendor_contacts')
-        .delete()
-        .in('id', idsToDelete);
-      if (deleteError) throw deleteError;
+    if (!result.success) {
+        throw new Error(result.message || 'Failed to update contact details.');
     }
     
     revalidatePath(`/business-dashboard?id=${businessId}`);
     
     return { 
         success: true, 
-        message: 'Contact details updated successfully!' 
+        message: result.message || 'Contact details updated successfully!' 
     };
 
   } catch (error) {

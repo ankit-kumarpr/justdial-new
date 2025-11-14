@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -23,7 +24,6 @@
     --border: 215 20% 90%;
     --input: 215 20% 90%;
     --ring: 178 69% 45%;
-    --radius: 0.5rem;
     --chart-1: 325 61% 43%;
     --chart-2: 178 69% 45%;
     --chart-3: 160 77% 45%;
@@ -35,6 +35,7 @@
     --sidebar-accent: 210 40% 96%;
     --sidebar-accent-foreground: 222 47% 11%;
     --sidebar-ring: 222 84% 5%;
+    --radius: 0.5rem;
   }
 
   .theme-blue {
@@ -93,6 +94,7 @@
     --sidebar-accent: 217 33% 17%;
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-ring: 215 20% 65%;
+    --radius: 0.5rem;
   }
 }
 
@@ -118,6 +120,99 @@
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border-width: 0;
+  }
+  
+  @property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  
+  /* Enhanced Offer Banner Styles */
+  .offer-banner-wrapper {
+    position: relative;
+    overflow: visible;
+    z-index: 1;
+    padding-top: 100px;
+    margin-top: -80px;
+  }
+
+  /* Discount Tag Styles - Transparent with Colorful Text */
+  .discount-tag {
+    position: absolute;
+    top: -85px; /* 3/4 of 180px height is 135px */
+    left: -10px;
+    width: 180px;
+    height: 180px;
+    background: transparent;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: discount-float 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes discount-float {
+    0%, 100% {
+      transform: translateY(0px) rotate(-5deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(5deg);
+    }
+  }
+
+  .discount-text {
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(135deg, #ff6b35, #f7931e, #ffd700, #ff6b35);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+    animation: gradient-text 3s ease infinite, text-pulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.6)) drop-shadow(0 0 20px rgba(247, 147, 30, 0.4));
+  }
+
+  @keyframes gradient-text {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes text-pulse {
+    0%, 100% {
+      transform: scale(1);
+      filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.6)) drop-shadow(0 0 20px rgba(247, 147, 30, 0.4));
+    }
+    50% {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.8)) drop-shadow(0 0 30px rgba(247, 147, 30, 0.6));
+    }
+  }
+
+  .discount-icon {
+    color: #ff6b35;
+    filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.8));
+    animation: icon-spin 4s linear infinite;
+  }
+
+  @keyframes icon-spin {
+    0%, 100% {
+      transform: rotate(0deg) scale(1);
+    }
+    25% {
+      transform: rotate(5deg) scale(1.1);
+    }
+    75% {
+      transform: rotate(-5deg) scale(1.1);
+    }
   }
 }
 
@@ -340,6 +435,9 @@ html {
   background-size: 100% 200%;
   animation: gradient-y 8s ease infinite;
 }
+
+
+
 
 /* ================================= */
 /* SLIDE & FADE ANIMATIONS */

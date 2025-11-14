@@ -31,7 +31,9 @@ import {
   RefreshCw,
   Loader2,
   Key,
-  LifeBuoy
+  LifeBuoy,
+  Lock,
+  Users,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -89,7 +91,7 @@ const quickActions = [
   { icon: Rocket, label: 'Biz Boosters', href: '/business-dashboard/biz-boosters' },
   { icon: Star, label: 'Reviews', href: '/reviews'},
   { icon: ImageIcon, label: 'Add Photos', href: '/business-dashboard/photos-videos' },
-  { icon: UserPlus, label: 'Add Contact', href: '/business-dashboard/edit-contact-details', badge: '!', badgeColor: 'bg-destructive text-destructive-foreground' },
+  { icon: Users, label: 'Add Employees', href: '/business-dashboard/employees' },
   { icon: 'whatsapp', label: 'Add WhatsApp', href: '/business-dashboard/edit-contact-details' },
   { icon: UploadCloud, label: 'Upload Catalogue', href: '/business-dashboard/catalogue', badge: 'FREE', badgeColor: 'bg-primary text-primary-foreground' },
   { icon: BadgePercent, label: 'Add Offer', href: '/business-dashboard/offers', badge: 'DIWALI', badgeColor: 'bg-yellow-400 text-black' },
@@ -202,6 +204,8 @@ function BusinessDashboardComponent() {
             setIsLeadsSheetOpen(true);
         }
     };
+    
+    const isLocked = kycStatus?.status === 'pending';
 
   return (
     <>
@@ -222,7 +226,7 @@ function BusinessDashboardComponent() {
                     <AlertTriangle className="h-4 w-4 !text-yellow-500" />
                     <AlertTitle>KYC Pending</AlertTitle>
                     <AlertDescription>
-                        Your KYC verification is in progress. We will notify you once it's complete.
+                        Your KYC verification is in progress. Features will be unlocked upon approval.
                     </AlertDescription>
                 </Alert>
             </motion.div>
@@ -360,8 +364,8 @@ function BusinessDashboardComponent() {
           className="grid grid-cols-4 sm:grid-cols-7 gap-4 text-center"
         >
           {quickActions.map((action, idx) => {
-              const ActionWrapper = action.href ? Link : 'div';
-              const props = action.href ? { href: `${action.href}${businessId ? `?id=${businessId}` : ''}` } : { onClick: () => handleQuickActionClick(action.action) };
+              const ActionWrapper = (action.href && !isLocked) ? Link : 'div';
+              const props = (action.href && !isLocked) ? { href: `${action.href}${businessId ? `?id=${businessId}` : ''}` } : { onClick: isLocked ? undefined : () => handleQuickActionClick(action.action) };
               
               return (
                 <ActionWrapper key={action.label} {...props}>
@@ -369,7 +373,7 @@ function BusinessDashboardComponent() {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: 0.7 + idx * 0.05 }}
-                    className="flex flex-col items-center gap-2 relative"
+                    className={cn("flex flex-col items-center gap-2 relative", isLocked ? "opacity-50 cursor-not-allowed" : "")}
                   >
                       {action.badge && (
                           <span className={`absolute -top-1 z-10 text-xs px-1.5 py-0.5 rounded-full font-semibold ${action.badgeColor} ${action.label === 'Advertise' ? 'left-1/2 -translate-x-1/2' : '-right-1'}`}>
@@ -377,13 +381,18 @@ function BusinessDashboardComponent() {
                           </span>
                       )}
                       <motion.div
-                        whileHover={{ scale: 1.1, y: -4 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="w-14 h-14 rounded-full bg-gradient-to-br from-white to-gray-50 flex items-center justify-center border-2 border-gray-100 hover:border-primary hover:shadow-xl cursor-pointer transition-all duration-300"
+                        whileHover={!isLocked ? { scale: 1.1, y: -4 } : {}}
+                        whileTap={!isLocked ? { scale: 0.95 } : {}}
+                        className={cn(
+                            "w-14 h-14 rounded-full bg-gradient-to-br from-white to-gray-50 flex items-center justify-center border-2 border-gray-100 transition-all duration-300",
+                            !isLocked && "hover:border-primary hover:shadow-xl cursor-pointer"
+                        )}
                       >
-                          {typeof action.icon === 'string' ? 
-                            <Image src={findImage('whatsapp-icon')} alt='whatsapp' width={28} height={28} /> : 
-                            <action.icon className="h-7 w-7 text-chart-1" />}
+                          {isLocked ? <Lock className="h-6 w-6 text-gray-400" /> : (
+                            typeof action.icon === 'string' ? 
+                              <Image src={findImage('whatsapp-icon')} alt='whatsapp' width={28} height={28} /> : 
+                              <action.icon className="h-7 w-7 text-chart-1" />
+                          )}
                       </motion.div>
                       <p className="text-xs font-medium text-gray-700">{action.label}</p>
                   </motion.div>
@@ -609,12 +618,12 @@ function BusinessDashboardComponent() {
                 </Link>
              </CarouselItem>
              <CarouselItem className="pl-4 md:basis-1/3">
-                <Link href={`/business-dashboard/number-of-employees?id=${businessId}`}>
+                <Link href={`/business-dashboard/employees?id=${businessId}`}>
                 <Card className="rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border-none bg-white/80 backdrop-blur-sm group overflow-hidden relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <CardContent className="p-6 flex flex-col justify-between h-48 relative z-10">
                       <div>
-                        <h3 className="font-bold text-gray-800">Add Number of Employees</h3>
+                        <h3 className="font-bold text-gray-800">Add Employees</h3>
                         <p className="text-sm text-gray-600 mb-4">Provide more details about your business size.</p>
                       </div>
                       <div className="flex justify-between items-end">
@@ -644,8 +653,8 @@ function BusinessDashboardComponent() {
             </CardHeader>
             <CardContent className="p-6 pt-0 space-y-2 relative z-10">
                 {myBusinessLinks.map((link, idx) => {
-                    const Wrapper = link.href ? Link : 'div';
-                    const props = link.href ? { href: `${link.href}${businessId ? `?id=${businessId}` : ''}` } : { onClick: () => handleBusinessLinkClick(link.action) };
+                    const Wrapper = (link.href && !isLocked) ? Link : 'div';
+                    const props = (link.href && !isLocked) ? { href: `${link.href}${businessId ? `?id=${businessId}` : ''}` } : { onClick: isLocked ? undefined : () => handleBusinessLinkClick(link.action) };
 
                     return (
                         <Wrapper key={link.title} {...props}>
@@ -653,12 +662,15 @@ function BusinessDashboardComponent() {
                               initial={{ opacity: 0, x: -20 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ duration: 0.4, delay: 1.1 + idx * 0.05 }}
-                              whileHover={{ x: 4, scale: 1.01 }}
-                              className="flex items-center justify-between p-4 hover:bg-gradient-to-r hover:from-primary/5 hover:to-transparent rounded-2xl cursor-pointer transition-all duration-300 group border border-transparent hover:border-primary/20"
+                              whileHover={!isLocked ? { x: 4, scale: 1.01 } : {}}
+                              className={cn(
+                                "flex items-center justify-between p-4 hover:bg-gradient-to-r hover:from-primary/5 hover:to-transparent rounded-2xl transition-all duration-300 group border border-transparent hover:border-primary/20",
+                                isLocked ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+                              )}
                             >
                                 <div className="flex items-center gap-4">
                                     <div className="p-3 bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl group-hover:scale-110 transition-transform duration-300">
-                                      <link.icon className="h-6 w-6 text-primary" />
+                                      {isLocked ? <Lock /> : <link.icon className="h-6 w-6 text-primary" />}
                                     </div>
                                     <div>
                                         <h4 className="font-semibold text-gray-800"> 
@@ -743,6 +755,9 @@ function Page() {
 }
 
 export default Page;
+
+
+
 
 
 

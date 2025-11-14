@@ -2,7 +2,7 @@
 'use client';
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarInset } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LayoutDashboard, Users, Settings, PlusCircle, Lock, LogOut, FileText, Shapes, BarChart2, Gavel, Ticket, Send } from "lucide-react";
+import { LayoutDashboard, Users, Settings, PlusCircle, Lock, LogOut, FileText, Shapes, BarChart2, Gavel, Ticket, Send, Star } from "lucide-react";
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
@@ -83,6 +83,14 @@ export default function SuperAdminLayout({
                      <Link href="/super-admin/tickets">
                         <Ticket />
                         Manage Tickets
+                    </Link>
+                </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={pathname.startsWith('/super-admin/reviews')}>
+                     <Link href="/super-admin/reviews">
+                        <Star />
+                        Manage Reviews
                     </Link>
                 </SidebarMenuButton>
             </SidebarMenuItem>

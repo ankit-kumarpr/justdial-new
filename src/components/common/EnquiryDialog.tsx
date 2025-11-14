@@ -32,6 +32,12 @@ export function EnquiryDialog({ isOpen, onOpenChange, searchKeyword, onSuccess }
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { city, latitude, longitude, address, state, pincode } = useLocation();
 
+  const handleSkip = () => {
+    onOpenChange(false);
+    // Directly navigate to search page on skip
+    router.push(`/search?q=${searchKeyword}`);
+  };
+
   const handleSubmit = async () => {
     if (!description.trim()) {
       toast({ title: "Description Required", description: "Please provide a description of your needs.", variant: "destructive" });
@@ -96,6 +102,7 @@ export function EnquiryDialog({ isOpen, onOpenChange, searchKeyword, onSuccess }
       }
       
       toast({ title: "Enquiry Submitted!", description: "We're finding the best matches for you." });
+      onSuccess(); // This will now trigger the redirect on success
       
     } catch (error) {
       toast({
@@ -103,10 +110,11 @@ export function EnquiryDialog({ isOpen, onOpenChange, searchKeyword, onSuccess }
         description: (error as Error).message,
         variant: "destructive",
       });
+      // Also redirect on failure so the user can see search results anyway
+      onSuccess();
     } finally {
       setIsSubmitting(false);
       onOpenChange(false);
-      onSuccess(); // Redirect on both success and failure
     }
   };
 
@@ -130,7 +138,7 @@ export function EnquiryDialog({ isOpen, onOpenChange, searchKeyword, onSuccess }
           />
         </div>
         <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)} disabled={isSubmitting}>Skip</Button>
+          <Button variant="ghost" onClick={handleSkip} disabled={isSubmitting}>Skip & Search</Button>
           <Button onClick={handleSubmit} disabled={isSubmitting || !description.trim()}>
             {isSubmitting ? (
               <>

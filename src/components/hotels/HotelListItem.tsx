@@ -1,4 +1,5 @@
 
+
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -13,13 +14,14 @@ type HotelListItemProps = {
 
 export function HotelListItem({ hotel }: HotelListItemProps) {
     const ratingColor = hotel.rating >= 4.0 ? 'bg-green-600' : hotel.rating >= 3.0 ? 'bg-yellow-500' : 'bg-red-600';
+    const imageSrc = hotel.image || 'https://picsum.photos/seed/hotel-placeholder/300/200';
 
     return (
         <Card className="bg-white">
             <CardContent className="p-4 flex flex-col md:flex-row gap-4">
                 <div className="relative w-full md:w-48 h-48 md:h-auto flex-shrink-0">
                     <Image
-                        src={hotel.image}
+                        src={imageSrc}
                         alt={hotel.name}
                         layout="fill"
                         objectFit="cover"
@@ -34,7 +36,7 @@ export function HotelListItem({ hotel }: HotelListItemProps) {
                 </div>
                 <div className="flex-grow">
                     <h3 className="text-lg font-bold text-gray-800 hover:text-primary">
-                        <Link href={`/business/${hotel.id}`}>{hotel.name}</Link>
+                        <Link href={`/business-profile?id=${hotel.id}`}>{hotel.name}</Link>
                     </h3>
                     <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
                         <span>{hotel.reviews} Ratings</span>

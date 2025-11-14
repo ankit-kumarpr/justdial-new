@@ -3,9 +3,9 @@
 
 import { useState, Suspense, useEffect, useActionState } from 'react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
+import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { ChevronLeft, Info, Loader2, AlertCircle as AlertCircleIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -15,6 +15,7 @@ import { useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { updateYearlyTurnover, type YearlyTurnoverState } from './actions';
+import { DashboardHeader } from '@/components/justdial/your-dashboard/DashboardHeader';
 
 const turnoverOptions = [ '5 Lakh or Less', '5 - 10 Lakhs', '11 - 25 Lakhs', '26 - 50 Lakhs', '51 Lakh - 1 Crore', '1 - 5 Crores', '6 - 10 Crores', '11 - 25 Crores', '26 - 50 Crores' ];
 
@@ -120,6 +121,7 @@ function YearlyTurnoverForm() {
     );
 }
 
+
 function YearlyTurnoverPage() {
     return (
         <motion.div
@@ -129,18 +131,7 @@ function YearlyTurnoverPage() {
             variants={pageTransition}
             className="flex flex-col min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 relative overflow-hidden"
         >
-            <header className="bg-white/80 backdrop-blur-md shadow-lg sticky top-0 z-20 border-b border-gray-100">
-                <div className="container mx-auto px-4 py-4 flex items-center gap-4">
-                    <Link href="/business-dashboard">
-                        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                            <Button variant="ghost" size="icon">
-                                <ChevronLeft className="h-6 w-6" />
-                            </Button>
-                        </motion.div>
-                    </Link>
-                    <h1 className="font-bold text-lg bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Turnover</h1>
-                </div>
-            </header>
+            <DashboardHeader title="Turnover" />
 
             <main className="flex-grow container mx-auto px-4 py-6 relative z-10">
                 <Suspense fallback={<div>Loading form...</div>}>

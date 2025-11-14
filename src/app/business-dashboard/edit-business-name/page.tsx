@@ -3,16 +3,16 @@
 
 import { Suspense } from 'react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { AlertCircle, Loader2 } from 'lucide-react';
 import { Alert, AlertTitle, AlertDescription as AlertDescriptionComponent } from '@/components/ui/alert';
 import { motion } from 'framer-motion';
 import { pageTransition } from '@/lib/animations';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState, useActionState } from 'react';
+import { useEffect, useState, useActionState, useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { getBusinessName, updateBusinessName, type EditBusinessNameState } from './actions';
 import { DashboardHeader } from '@/components/justdial/your-dashboard/DashboardHeader';
@@ -24,40 +24,51 @@ function EditBusinessNameForm() {
 
     const [currentName, setCurrentName] = useState('');
     const [isLoading, setIsLoading] = useState(true);
+    const [token, setToken] = useState<string | null>(null);
 
     const initialState: EditBusinessNameState = {};
     const [state, formAction, isPending] = useActionState(updateBusinessName, initialState);
 
-    useEffect(() => {
-        if (businessId) {
-            const fetchName = async () => {
-                setIsLoading(true);
-                const { name, error } = await getBusinessName(businessId);
-                if (error) {
-                    toast({ title: 'Error', description: 'Could not load business name.', variant: 'destructive'});
-                } else if (name) {
-                    setCurrentName(name);
-                }
-                setIsLoading(false);
-            };
-            fetchName();
+    const fetchName = useCallback(async (userToken: string) => {
+        if (businessId && userToken) {
+            setIsLoading(true);
+            const { name, error } = await getBusinessName(businessId, userToken);
+            if (error) {
+                toast({ title: 'Error', description: `Could not load business name: ${error}`, variant: 'destructive'});
+            } else if (name) {
+                setCurrentName(name);
+            }
+            setIsLoading(false);
         } else {
             setIsLoading(false);
         }
     }, [businessId, toast]);
+
+     useEffect(() => {
+        const userToken = localStorage.getItem('accessToken');
+        if (userToken) {
+            setToken(userToken);
+            fetchName(userToken);
+        } else {
+            setIsLoading(false);
+        }
+    }, [fetchName]);
     
     useEffect(() => {
         if(state?.message) {
             if(state.success) {
                 toast({ title: "Success!", description: state.message });
+                if (token) fetchName(token);
+                // Trigger a storage event to notify other components like the header
+                window.dispatchEvent(new Event("storage"));
             } else {
                 toast({ title: "Error", description: state.message, variant: 'destructive' });
             }
         }
-    }, [state, toast]);
+    }, [state, toast, fetchName, token]);
 
     if(isLoading) {
-        return <div>Loading...</div>
+        return <div className="flex items-center justify-center p-8"><Loader2 className="h-8 w-8 animate-spin" /></div>
     }
 
     if (!businessId) {
@@ -75,6 +86,7 @@ function EditBusinessNameForm() {
     return (
         <form action={formAction}>
             <input type="hidden" name="businessId" value={businessId} />
+            <input type="hidden" name="token" value={token || ''} />
             <Card className="rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border-none bg-white/80 backdrop-blur-sm relative overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <CardHeader className="relative z-10">
@@ -157,7 +169,7 @@ function EditBusinessNamePageComponent() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                     >
-                       <Suspense fallback={<div>Loading form...</div>}>
+                       <Suspense fallback={<div className="flex items-center justify-center p-8"><Loader2 className="h-8 w-8 animate-spin" /></div>}>
                           <EditBusinessNameForm />
                        </Suspense>
                     </motion.div>
@@ -169,7 +181,7 @@ function EditBusinessNamePageComponent() {
 
 function Page() {
     return (
-        <Suspense fallback={<div>Loading page...</div>}>
+        <Suspense fallback={<div className="h-screen w-full flex items-center justify-center"><Loader2 className="h-12 w-12 animate-spin" /></div>}>
             <EditBusinessNamePageComponent />
         </Suspense>
     )

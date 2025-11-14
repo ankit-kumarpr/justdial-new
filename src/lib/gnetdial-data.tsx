@@ -34,12 +34,6 @@ export const plans = [
         highlight: true,
         duration: '3 Year Plan'
     },
-    {
-        name: 'Growth',
-        subtitle: 'Pricing for Offer Banners',
-        buttonText: 'Explore',
-        nameIcon: 'growth'
-    }
 ];
 
 export const planFeatures = [

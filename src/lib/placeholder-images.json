@@ -30,25 +30,25 @@
     {
       "id": "gd-hero-repairs",
       "description": "Repairs and services banner",
-      "imageUrl": "https://images.unsplash.com/photo-1613206485381-b028e578e791?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx0b29sc3xlbnwwfHx8fDE3NjE2NjIzOTN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1613206485381-b028e578e791?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx0b29sc3xlbnwwfHx8fDE3NjE2NjIzOTN8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "tools"
     },
     {
       "id": "gd-hero-realestate",
       "description": "Real estate banner",
-      "imageUrl": "https://images.unsplash.com/photo-1628745277862-bc0b2d68c50c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb2Rlcm4lMjBob3VzZXxlbnwwfHx8fDE3NjE2MDE2Mjd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1628745277862-bc0b2d68c50c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb2Rlcm4lMjBob3VzZXxlbnwwfHx8fDE3NjE2MDE2Mjd8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "modern house"
     },
     {
       "id": "gd-hero-doctors",
       "description": "Doctors and healthcare banner",
-      "imageUrl": "https://images.unsplash.com/photo-1584982751601-97dcc096659c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzdGV0aG9zY29wZXxlbnwwfHx8fDE3NjE2NjMzNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1584982751601-97dcc096659c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzdGV0aG9zY29wZXxlbnwwfHx8fDE3NjE2NjMzNDB8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "stethoscope"
     },
     {
       "id": "gd-ad-1",
       "description": "Gnetdial Advertisement 1",
-      "imageUrl": "https://images.unsplash.com/photo-1607944759677-e305f1b25af8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhZHZlcnRpc2VtZW50JTIwcG9ydHJhaXR8ZW58MHx8fHwxNzYxNjYzMzQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1607944759677-e305f1b25af8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhZHZlcnRpc2VtZW50JTIwcG9ydHJhaXR8ZW58MHx8fHwxNzYxNjYzMzQwfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "advertisement portrait"
     },
     {
@@ -132,7 +132,7 @@
     {
       "id": "jd-movie-2",
       "description": "Movie poster 2",
-      "imageUrl": "https://images.unsplash.com/photo-1511875762315-c773eb98eec0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1511875762315-c773eb98eec0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "movie poster"
     },
     {
@@ -144,31 +144,31 @@
     {
       "id": "jd-movie-4",
       "description": "Movie poster 4",
-      "imageUrl": "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib.rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "movie poster"
     },
     {
       "id": "jd-movie-5",
       "description": "Movie poster 5",
-      "imageUrl": "https://images.unsplash.com/photo-1635805737707-575885ab0820?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1635805737707-575885ab0820?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "movie poster"
     },
     {
       "id": "jd-movie-6",
       "description": "Movie poster 6",
-      "imageUrl": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bW92aWUlMjBwb3N0ZXJ8ZW58MHx8fHwxNzYxNTcxOTQ0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bW92aWUlMjBwb3N0ZXJ8ZW58MHx8fHwxNzYxNTcxOTQ0fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "movie poster"
     },
     {
       "id": "jd-movie-7",
       "description": "Movie poster 7",
-      "imageUrl": "https://images.unsplash.com/photo-1616530940355-351fabd9524b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1616530940355-351fabd9524b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "movie poster"
     },
     {
       "id": "jd-movie-8",
       "description": "Movie poster 8",
-      "imageUrl": "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb3ZpZSUyMHBvc3RlcnxlbnwwfHx8fDE3NjE1NzE5NDR8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "movie poster"
     },
     {
@@ -198,7 +198,7 @@
     {
       "id": "jd-tourist-5",
       "description": "Tourist place Goa",
-      "imageUrl": "https://images.unsplash.com/photo-1505142468610-359e7d316be0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxiZWFjaHxlbnwwfHx8fDE3NjE2MzU5MDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1505142468610-359e7d316be0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxiZWFjaHxlbnwwfHx8fDE3NjE2MzU5MDV8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "beach"
     },
     {
@@ -228,7 +228,7 @@
     {
       "id": "jd-popular-2",
       "description": "Popular search Estate Agent Residence",
-      "imageUrl": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxob3VzZXxlbnwwfHx8fDE3NjE1OTIxMTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxob3VzZXxlbnwwfHx8fDE3NjE1OTIxMTl8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "house"
     },
     {
@@ -318,7 +318,7 @@
     {
       "id": "jd-article-1",
       "description": "Article 1",
-      "imageUrl": "https://images.unsplash.com/photo-1620680779930-e74c15c8f7a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhcnRpY2xlfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1620680779930-e74c15c8f7a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxhcnRpY2xlfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "article"
     },
     {
@@ -335,12 +335,12 @@
     },
     {
       "id": "jd-cat-restaurant-img",
-      "imageUrl": "https://images.unsplash.com/photo-1540432797114-187727adf19b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxmb29kJTIwcGxhdGV8ZW58MHx8fHwxNzYxNjU2Mzc3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1540432797114-187727adf19b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxmb29kJTIwcGxhdGV8ZW58MHx8fHwxNzYxNjU2Mzc3fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "food plate"
     },
     {
       "id": "jd-cat-hotel-img",
-      "imageUrl": "https://images.unsplash.com/photo-1690935986319-c11e6cae84f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxob3RlbCUyMGJlZHxlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1690935986319-c11e6cae84f7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxob3RlbCUyMGJlZHxlbnwwfHx8fDE3NjE2NjMzNDF8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "hotel bed"
     },
     {
@@ -350,7 +350,7 @@
     },
     {
       "id": "jd-cat-decor-img",
-      "imageUrl": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxob21lJTIwZGVjb3J8ZW58MHx8fHwxNzYxNjYzMzQwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxob21lJTIwZGVjb3J8ZW58MHx8fHwxNzYxNjYzMzQwfDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "home decor"
     },
     {
@@ -365,12 +365,12 @@
     },
     {
       "id": "jd-cat-rent-img",
-      "imageUrl": "https://images.unsplash.com/photo-1615404420216-cc423164563f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmb3IlMjByZW50fGVufDB8fHx8MTc2MTY2MzM0MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1615404420216-cc423164563f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmb3IlMjByZW50fGVufDB8fHx8MTc2MTY2MzM0MHww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "for rent"
     },
     {
       "id": "jd-cat-hospital-img",
-      "imageUrl": "https://images.unsplash.com/photo-1597807037496-c56a1d8bc29a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8aG9zcGl0YWwlMjBidWlsZGluZ3xlbnwwfHx8fDE3NjE1NTg1ODF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1597807037496-c56a1d8bc29a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8aG9zcGl0YWwlMjBidWlsZGluZ3xlbnwwfHx8fDE3NjE1NTg1ODF8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "hospital building"
     },
     {
@@ -385,12 +385,12 @@
     },
     {
       "id": "jd-cat-hostel-img",
-      "imageUrl": "https://images.unsplash.com/photo-1709805619372-40de3f158e83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxidW5rJTIwYmVkc3xlbnwwfHx8fDE3NjE2NjMzNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1709805619372-40de3f158e83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxidW5rJTIwYmVkc3xlbnwwfHx8fDE3NjE2NjMzNDB8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "bunk beds"
     },
     {
       "id": "jd-cat-estate-img",
-      "imageUrl": "https://images.unsplash.com/flagged/photo-1564767609424-270b9df918e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxob3VzZSUyMGtleXxlbnwwfHx8fDE3NjE2NjMzNDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/flagged/photo-1564767609424-270b9df918e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxob3VzZSUyMGtleXxlbnwwfHx8fDE3NjE2NjMzNDB8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "house key"
     },
     {
@@ -420,12 +420,12 @@
     },
     {
       "id": "jd-cat-packers-img",
-      "imageUrl": "https://images.unsplash.com/photo-1624137527136-66e631bdaa0e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtb3ZpbmclMjBib3hlc3xlbnwwfHx8fDE3NjE1ODQ2Mjl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1624137527136-66e631bdaa0e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtb3ZpbmclMjBib3hlc3xlbnwwfHx8fDE3NjE1ODQ2Mjl8MA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "moving boxes"
     },
     {
       "id": "jd-cat-courier-img",
-      "imageUrl": "https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxkZWxpdmVyeSUyMHRydWNrfGVufDB8fHx8MTc2MTYzODQzNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxkZWxpdmVyeSUyMHRydWNrfGVufDB8fHx8MTc2MTYzODQzNnww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "delivery truck"
     },
     {
@@ -620,7 +620,7 @@
     },
     {
       "id": "turnover-icon",
-      "imageUrl": "https://images.unsplash.com/photo-1593672715438-d88a70629abe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtb25leSUyMHN0YWNrfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1593672715438-d88a70629abe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtb25leSUyMHN0YWNrfGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "money stack"
     },
     {
@@ -670,7 +670,7 @@
     },
     {
       "id": "success-5",
-      "imageUrl": "https://images.unsplash.com/photo-1615538785945-6625ccdb4b25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwb3J0cmFpdCUyMHdvbWFufGVufDB8fHx8MTc2MTYwNjk5NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1615538785945-6625ccdb4b25?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwb3J0cmFpdCUyMHdvbWFufGVufDB8fHx8MTc2MTYwNjk5NHww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "portrait woman"
     },
     {
@@ -815,7 +815,7 @@
     },
     {
       "id": "yd-social",
-      "imageUrl": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8c2hhcmUlMjBpY29ufGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8c2hhcmUlMjBpY29ufGVufDB8fHx8MTc2MTY2MzM0MXww&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "share icon"
     },
     {
@@ -1015,8 +1015,26 @@
     {
       "id": "category-placeholder",
       "description": "Default placeholder for category icons",
-      "imageUrl": "https://images.unsplash.com/photo-1611001440648-e90aff42faa3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxpY29uJTIwYWJzdHJhY3R8ZW58MHx8fHwxNzYxNjg0MDM2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1611001440648-e90aff42faa3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxpY29uJTIwYWJzdHJhY3R8ZW58MHx8fHwxNzYxNjg0MDM2fDA&ixlib.rb-4.1.0&q=80&w=1080",
       "imageHint": "icon abstract"
+    },
+    {
+      "id": "plan-screenshot-1",
+      "description": "Screenshot of a dashboard analytics page",
+      "imageUrl": "https://images.unsplash.com/photo-1600880292203-942bb68b2434?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "dashboard analytics"
+    },
+    {
+      "id": "plan-screenshot-2",
+      "description": "Screenshot of a clean user interface",
+      "imageUrl": "https://images.unsplash.com/photo-1545239351-ef35f43d514b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "user interface"
+    },
+    {
+      "id": "plan-screenshot-3",
+      "description": "Screenshot of a mobile app screen",
+      "imageUrl": "https://images.unsplash.com/photo-1601972603509-e4933903173a?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "mobile app screen"
     }
   ]
 }
