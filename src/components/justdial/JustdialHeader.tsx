@@ -163,17 +163,17 @@ export function JustdialHeader() {
   const myBusinessHref = isVendorState ? (singleBusinessId ? `/business-dashboard?id=${singleBusinessId}` : '/my-business') : '#';
 
   return (
-    <motion.header
-      style={{ opacity: headerOpacity }}
-      className={`sticky top-0 z-50 w-full transition-all duration-500 ${
-        isScrolled 
-          ? 'h-16 shadow-lg glass-strong backdrop-blur-xl border-b border-white/20' 
-          : 'h-20 bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-200'
-      }`}
-    >
+ <motion.header
+  className={`sticky top-0 z-50 w-full transition-all duration-500 ${
+    isScrolled 
+      ? 'h-16 shadow-lg bg-white border-b border-gray-200' 
+      : 'h-20 bg-white shadow-sm border-b border-gray-200'
+  }`}
+>
+
+
       <div className="container mx-auto px-4">
-        <div className={`flex items-center justify-between gap-4 transition-all duration-500 ${
-          isScrolled ? 'h-16' : 'h-20'
+        <div className={`flex items-center justify-between gap-4 transition-all duration-500 ${isScrolled ? 'h-16' : 'h-20'
         }`}>
           {/* Logo Section */}
           <motion.div
